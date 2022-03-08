@@ -1,0 +1,25 @@
+.ql-container {
+    font-size: 15px !important;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+
+.ql-toolbar {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.ql-snow {
+    background-color: #fff;
+}
+
+.quill {
+    height: 100% !important;
+}
+
+.editor {
+    margin-top: 15px;
+    width: 100%;
+    height: 70%;
+    text-align: center !important;
+}
