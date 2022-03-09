@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import ReactQuill from "react-quill"; // ES6
 import { withRouter } from "react-router-dom";
+
 import formatDateTime from "../../configs/formatDateTime";
 
 import "react-quill/dist/quill.snow.css"; // ES6
@@ -10,7 +11,9 @@ import "./Note.css";
 import io from "socket.io-client";
 import ModalCheckPass from "./ModalCheckPass";
 import NoteController from "./NoteController";
-const serverHost = "http://localhost:5000/";
+
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+const serverHost = API_ENDPOINT;
 const socket = io(serverHost);
 
 class Note extends React.Component {
@@ -22,8 +25,9 @@ class Note extends React.Component {
             code: "",
             password: "",
             updatedAt: "",
-            isConfirmedPassword: false,
+            isConfirmedPassword: true,
             focus: false,
+            isShowNotiUpdatedNote: false,
         };
 
         this.bodyInput = React.createRef();
@@ -52,11 +56,8 @@ class Note extends React.Component {
             return;
         }
 
-        // console.clear();
-        // console.log(this.state.content);
-
         axios
-            .put("http://localhost:5000/api/note/update-content", {
+            .put(`${API_ENDPOINT}/api/note/update-content`, {
                 code: this.props.match.params.code,
                 password: this.state.password,
                 content: value,
@@ -68,6 +69,18 @@ class Note extends React.Component {
                     password: "",
                     content: value,
                 });
+
+                setTimeout(() => {
+                    this.setState({
+                        isShowNotiUpdatedNote: true,
+                    });
+                }, 1000);
+
+                setTimeout(() => {
+                    this.setState({
+                        isShowNotiUpdatedNote: false,
+                    });
+                }, 5000);
             })
             .catch((error) => {
                 console.log(error);
@@ -88,13 +101,13 @@ class Note extends React.Component {
     async componentDidMount() {
         let code = this.props.match.params.code;
 
-        document.title = `Fast Note - ${code}`;
-
         // this.state.focus
         //     ? this.bodyInput.current.focus()
         //     : this.bodyInput.current.blur();
 
-        let res = await axios.get(`http://localhost:5000/api/note/${code}`);
+        document.title = `Fast Note - ${code}`;
+
+        let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
 
         let note = res.data.data;
 
@@ -103,10 +116,11 @@ class Note extends React.Component {
         this.setState({
             code: note.code,
             password: note.password,
+            isConfirmedPassword: note.password === "" ? true : false,
         });
 
         if (note.password !== "") {
-            console.log("Private");
+            console.log("Note Is Private !!");
             return;
         }
 
@@ -155,10 +169,17 @@ class Note extends React.Component {
     }
 
     render() {
-        let { code, password, content, updatedAt, isConfirmedPassword } =
-            this.state;
+        let {
+            code,
+            password,
+            content,
+            updatedAt,
+            isConfirmedPassword,
+            isShowNotiUpdatedNote,
+        } = this.state;
 
         // console.log("Code: ", code, "\nPassword: ", password);
+        // console.log("API_ENDPOINT: ", process.env.REACT_APP_API_ENDPOINT);
 
         return (
             <div
@@ -184,9 +205,18 @@ class Note extends React.Component {
                                             {" " + code + " - "}
                                         </span>
                                         &nbsp;
-                                        <span className="text-success noti-note">
+                                        <span className="noti-note">
                                             <i className="bi bi-clock-history"></i>
                                             {" " + updatedAt}
+                                        </span>
+                                        <span className="noti-note">
+                                            {isShowNotiUpdatedNote ? (
+                                                <>
+                                                    {" "}
+                                                    <i className="bi bi-check"></i>
+                                                    Đã lưu
+                                                </>
+                                            ) : null}
                                         </span>
                                     </div>
 
