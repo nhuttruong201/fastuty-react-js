@@ -15,7 +15,7 @@ function Navbar() {
                 <h1 className="m-0 text-primary">
                     {/* <i className="fa fa-tooth me-2" /> */}
                     <i className="fas fa-meteor"></i>
-                    &nbsp;Fast Uty
+                    &nbsp;Fast<span className="text-secondary">Uty</span>
                 </h1>
             </Link>
             <button

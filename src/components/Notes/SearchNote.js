@@ -2,10 +2,15 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 class SearchNote extends React.Component {
-    state = {
-        code: "",
-        errMsg: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            code: "",
+            errMsg: null,
+        };
+
+        this.txtPassword = React.createRef();
+    }
 
     handleChangeCode = (e) => {
         this.setState({
@@ -24,14 +29,18 @@ class SearchNote extends React.Component {
         }
 
         this.props.history.push(`/note/${this.state.code}`);
-        // console.log();
+    };
+
+    componentDidMount = () => {
+        document.title = "Fast Note";
+        this.txtPassword.current.focus();
     };
 
     render() {
         let { errMsg } = this.state;
 
         return (
-            <div className="wow zoomIn">
+            <div className="">
                 <div
                     className="mx-auto mt-4 p-4 bg-white"
                     style={{ width: "400px" }}
@@ -50,6 +59,7 @@ class SearchNote extends React.Component {
                                 value={this.state.code}
                                 placeholder="nhập mã ghí chú..."
                                 className="form-control"
+                                ref={this.txtPassword}
                                 onChange={(e) => this.handleChangeCode(e)}
                             />
                         </div>
@@ -63,7 +73,7 @@ class SearchNote extends React.Component {
                         </div>
                     </form>
                 </div>
-                <p className="text-center p-4" style={{ "font-size": "13px" }}>
+                <p className="text-center p-4" style={{ fontSize: "13px" }}>
                     <span>
                         Mỗi mã ghi chú sẽ chứa một nội dung ghi chú riêng.
                     </span>
