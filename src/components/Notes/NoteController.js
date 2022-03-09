@@ -70,7 +70,7 @@ class NoteController extends React.Component {
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         let { showModalBackup, showModalSecurity, showModalShare } = this.state;
         let { password } = this.state;
 

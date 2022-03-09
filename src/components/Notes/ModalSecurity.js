@@ -60,10 +60,13 @@ class ModalSecurity extends React.Component {
 
         // gọi api update password
         axios
-            .put("http://localhost:5000/api/note/update-password", {
-                code,
-                password,
-            })
+            .put(
+                `${process.env.REACT_APP_API_ENDPOINT}/api/note/update-password`,
+                {
+                    code,
+                    password,
+                }
+            )
             .then((res) => {
                 // console.log("res from handleUpdatePassword: ", res);
                 // noti

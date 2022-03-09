@@ -43,8 +43,11 @@ class App extends Component {
                     <Route path="/note" exact>
                         <SearchNote />
                     </Route>
-                    <Route path="/note/:code">
+                    <Route path="/note/:code" exact>
                         <Note />
+                    </Route>
+                    <Route path="/note/backup/:code" exact>
+                        <h1>Note Backup</h1>
                     </Route>
                     <Route path="/chat">
                         <Chat />

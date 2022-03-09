@@ -2,6 +2,7 @@ import React from "react";
 import {
     Alert,
     Button,
+    Input,
     Modal,
     ModalBody,
     ModalFooter,
@@ -46,7 +47,7 @@ class ModalCheckPass extends React.Component {
         }
 
         let res = await axios.post(
-            "http://localhost:5000/api/note/check-password",
+            `${process.env.REACT_APP_API_ENDPOINT}/api/note/check-password`,
             {
                 code,
                 password,
@@ -73,7 +74,7 @@ class ModalCheckPass extends React.Component {
 
         return (
             <div>
-                <Modal isOpen={true} centered={true}>
+                <Modal isOpen={true} centered={true} autoFocus={false}>
                     <ModalHeader
                     // toggle={function noRefCheck() {}}
                     >
@@ -92,6 +93,7 @@ class ModalCheckPass extends React.Component {
                                 className="form-control mt-1"
                                 onKeyDown={this.handleKeyDown}
                                 onChange={(e) => this.handleOnChangePassword(e)}
+                                autoFocus
                             />
                         </div>
                         {errMsg ? (
