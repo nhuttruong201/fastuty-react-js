@@ -2,24 +2,28 @@ import axios from "axios";
 import React from "react";
 import ReactQuill from "react-quill"; // ES6
 import { withRouter } from "react-router-dom";
+import formatDateTime from "../../configs/formatDateTime";
 
 import "react-quill/dist/quill.snow.css"; // ES6
 import "./Note.css";
 
 import io from "socket.io-client";
 import ModalCheckPass from "./ModalCheckPass";
+import NoteController from "./NoteController";
 const serverHost = "http://localhost:5000/";
 const socket = io(serverHost);
 
 class Note extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             content: "",
             code: "",
             password: "",
-            focus: true,
             updatedAt: "",
+            isConfirmedPassword: false,
+            focus: false,
         };
 
         this.bodyInput = React.createRef();
@@ -54,7 +58,7 @@ class Note extends React.Component {
         axios
             .put("http://localhost:5000/api/note/update-content", {
                 code: this.props.match.params.code,
-                password: "",
+                password: this.state.password,
                 content: value,
             })
             .then((response) => {
@@ -70,14 +74,25 @@ class Note extends React.Component {
             });
     };
 
+    handleConfirmedPassword = (data) => {
+        console.log("handleConfirmPassword from Note.js: ", data);
+        this.setState({
+            content: data.content,
+            code: data.code,
+            password: data.password,
+            updatedAt: formatDateTime(new Date(data.updatedAt)),
+            isConfirmedPassword: true,
+        });
+    };
+
     async componentDidMount() {
         let code = this.props.match.params.code;
 
         document.title = `Fast Note - ${code}`;
 
-        this.state.focus
-            ? this.bodyInput.current.focus()
-            : this.bodyInput.current.blur();
+        // this.state.focus
+        //     ? this.bodyInput.current.focus()
+        //     : this.bodyInput.current.blur();
 
         let res = await axios.get(`http://localhost:5000/api/note/${code}`);
 
@@ -97,17 +112,20 @@ class Note extends React.Component {
 
         this.setState({
             content: note.content,
+            updatedAt: formatDateTime(new Date(note.updatedAt)),
+            isConfirmedPassword: true,
         });
 
         // TODO real time
         //* SEND
         socket.emit("join-room", code);
+
         //* RECEIVE
         socket.on("connect", () => {
             console.log(">>>>>>>> check realtime: ", socket.id);
         });
 
-        // caller
+        //* caller
         socket.on("join-room-success", (msg) => {
             console.log("join-room-success: ", msg);
         });
@@ -116,10 +134,10 @@ class Note extends React.Component {
             this.setState({
                 updatedAt,
             });
-            console.log("update-note-caller-succeed: ", updatedAt);
+            // console.log("update-note-caller-succeed: ", updatedAt);
         });
 
-        // other
+        //* others
         socket.on("update-note-other-succeed", (dataUpdate) => {
             // console.log(dataUpdate);
             let { socketId, content, updatedAt } = dataUpdate;
@@ -137,30 +155,56 @@ class Note extends React.Component {
     }
 
     render() {
-        let { code, password, content } = this.state;
+        let { code, password, content, updatedAt, isConfirmedPassword } =
+            this.state;
+
         // console.log("Code: ", code, "\nPassword: ", password);
 
         return (
-            <div className="row justify-content-center h-100">
-                <div className="col-md-12 col-lg-10 px-2 h-100">
-                    <div className="editor">
-                        {password !== "" ? (
-                            <>
-                                {/* <p>Ghi chú được bảo mật</p> */}
-                                <ModalCheckPass />
-                            </>
-                        ) : (
-                            <ReactQuill
-                                theme="snow"
-                                modules={Note.modules}
-                                placeholder="ghi chú..."
-                                value={content}
-                                onChange={this.handleChange}
-                                onFocus={this.onFocus}
-                                onBlur={this.onBlur}
-                                ref={this.bodyInput}
-                            ></ReactQuill>
-                        )}
+            <div
+                className="container-fluid h-100 p-0"
+                style={{ overflow: "hidden" }}
+            >
+                <div className="row justify-content-center h-100">
+                    <div className="col-md-12 col-lg-10 h-100 py-3">
+                        <div className="editor">
+                            {!isConfirmedPassword ? (
+                                <>
+                                    <ModalCheckPass
+                                        confirmedPassword={
+                                            this.handleConfirmedPassword
+                                        }
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <div className="mb-2 px-md-0 px-2">
+                                        <span className="code-note">
+                                            <i className="bi bi-pencil-fill"></i>
+                                            {" " + code + " - "}
+                                        </span>
+                                        &nbsp;
+                                        <span className="text-success noti-note">
+                                            <i className="bi bi-clock-history"></i>
+                                            {" " + updatedAt}
+                                        </span>
+                                    </div>
+
+                                    <ReactQuill
+                                        theme="snow"
+                                        modules={Note.modules}
+                                        placeholder="ghi chú..."
+                                        value={content}
+                                        onChange={this.handleChange}
+                                        onFocus={this.onFocus}
+                                        onBlur={this.onBlur}
+                                        ref={this.bodyInput}
+                                    ></ReactQuill>
+
+                                    <NoteController password={password} />
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

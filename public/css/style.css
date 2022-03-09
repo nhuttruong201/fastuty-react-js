@@ -1,4 +1,10 @@
 /********** Template CSS **********/
+.mid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1em;
+}
 :root {
     --primary: #06a3da;
     --secondary: #f57e57;

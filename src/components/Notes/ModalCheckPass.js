@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 class ModalCheckPass extends React.Component {
     constructor(props) {
@@ -33,7 +34,8 @@ class ModalCheckPass extends React.Component {
         });
     };
 
-    handleConfirmPassword = () => {
+    handleConfirmPassword = async () => {
+        let code = this.props.match.params.code;
         let { password } = this.state;
 
         if (password === "" || password.length < 4 || password.length > 20) {
@@ -43,13 +45,23 @@ class ModalCheckPass extends React.Component {
             return;
         }
 
-        if (password === "admin") {
-            this.props.history.push("/");
-        } else {
+        let res = await axios.post(
+            "http://localhost:5000/api/note/check-password",
+            {
+                code,
+                password,
+            }
+        );
+
+        if (!res.data.result) {
             this.setState({
                 errMsg: "Mật khẩu không đúng!",
             });
+            return;
         }
+
+        //* success
+        this.props.confirmedPassword(res.data.data);
     };
 
     handleCancel = () => {
@@ -65,24 +77,29 @@ class ModalCheckPass extends React.Component {
                     <ModalHeader
                     // toggle={function noRefCheck() {}}
                     >
-                        <i className="bi bi-lock-fill"></i>
-                        Ghi chú được bảo mật
+                        <i className="fas fa-lock"></i> Ghi chú được bảo mật
                     </ModalHeader>
                     <ModalBody className="p-4">
-                        {errMsg ? <Alert color="danger">{errMsg}</Alert> : ""}
-
                         <div className="form-group">
-                            <label>Vui lòng nhập mật khẩu</label>
+                            <label style={{ fontSize: "14px" }}>
+                                Vui lòng nhập mật khẩu
+                            </label>
                             <input
                                 type={"password"}
                                 value={password}
                                 placeholder={"mật khẩu từ 4 - 20 ký tự"}
                                 maxLength={20}
-                                className="form-control mt-2"
+                                className="form-control mt-1"
                                 onKeyDown={this.handleKeyDown}
                                 onChange={(e) => this.handleOnChangePassword(e)}
                             />
                         </div>
+                        {errMsg ? (
+                            <Alert color="danger mt-2">
+                                <i className="bi bi-exclamation-diamond-fill"></i>{" "}
+                                {errMsg}
+                            </Alert>
+                        ) : null}
                     </ModalBody>
                     <ModalFooter>
                         <Button
