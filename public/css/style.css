@@ -331,3 +331,22 @@ h6,
     width: 120px;
     height: 120px;
 }
+
+.border-radius-full {
+    border-radius: 15px !important;
+}
+
+.border-radius-top-left {
+    border-top-left-radius: 15px !important;
+}
+
+.border-radius-top-right {
+    border-top-right-radius: 15px !important;
+}
+
+.border-radius-bottom-left {
+    border-bottom-left-radius: 15px !important;
+}
+.border-radius-bottom-right {
+    border-bottom-right-radius: 15px !important;
+}

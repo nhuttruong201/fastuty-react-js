@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
-    let location = useLocation();
-    // console.log("Check path: ", location.pathname);
-
     let handleScrollTop = () => {
         window.scrollTo(0, 0);
     };
@@ -12,11 +9,11 @@ function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
             <Link to={"/"} className="navbar-brand p-0">
-                <h1 className="m-0 text-primary">
+                <h2 className="m-0 text-primary">
                     {/* <i className="fa fa-tooth me-2" /> */}
                     <i className="fas fa-meteor"></i>
                     &nbsp;Fast<span className="text-secondary">Uty</span>
-                </h1>
+                </h2>
             </Link>
             <button
                 className="navbar-toggler"
@@ -31,7 +28,7 @@ function Navbar() {
                     <NavLink
                         to="/"
                         exact={true}
-                        className="nav-item nav-link btn-to-top"
+                        className="nav-item nav-link btn-to-top py-3"
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -39,7 +36,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/note"
-                        className="nav-item nav-link btn-to-top"
+                        className="nav-item nav-link btn-to-top py-3"
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -47,7 +44,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/chat"
-                        className={"nav-item nav-link btn-to-top"}
+                        className={"nav-item nav-link btn-to-top py-3"}
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -55,7 +52,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/image"
-                        className={"nav-item nav-link btn-to-top"}
+                        className={"nav-item nav-link btn-to-top py-3"}
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >

@@ -47,7 +47,7 @@ class Note extends React.Component {
         });
     };
 
-    handleChange = (value) => {
+    handleChangeContent = (value) => {
         this.setState({
             content: value,
         });
@@ -66,7 +66,7 @@ class Note extends React.Component {
                 // console.log(response);
                 socket.emit("update-note", {
                     code: this.props.match.params.code,
-                    password: "",
+                    password: this.state.password,
                     content: value,
                 });
 
@@ -96,22 +96,24 @@ class Note extends React.Component {
             updatedAt: formatDateTime(new Date(data.updatedAt)),
             isConfirmedPassword: true,
         });
+
+        // *realtime
+        this.handleRealTime(data.code);
     };
 
-    async componentDidMount() {
-        let code = this.props.match.params.code;
+    handleSubmitCode = (newCode) => {
+        this.props.history.push("/note/" + newCode);
+        this.loadData(newCode);
+    };
 
-        // this.state.focus
-        //     ? this.bodyInput.current.focus()
-        //     : this.bodyInput.current.blur();
+    loadData = async (code) => {
+        console.log("Load data: ", code);
 
         document.title = `Fast Note - ${code}`;
 
         let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
 
         let note = res.data.data;
-
-        // console.log(note.content);
 
         this.setState({
             code: note.code,
@@ -130,6 +132,11 @@ class Note extends React.Component {
             isConfirmedPassword: true,
         });
 
+        // * real time
+        this.handleRealTime(code);
+    };
+
+    handleRealTime = (code) => {
         // TODO real time
         //* SEND
         socket.emit("join-room", code);
@@ -153,7 +160,7 @@ class Note extends React.Component {
 
         //* others
         socket.on("update-note-other-succeed", (dataUpdate) => {
-            // console.log(dataUpdate);
+            console.log(dataUpdate);
             let { socketId, content, updatedAt } = dataUpdate;
             console.log("ID tao: ", socket.id, "ID mầy: ", socketId);
 
@@ -166,6 +173,16 @@ class Note extends React.Component {
                 });
             }
         });
+    };
+
+    async componentDidMount() {
+        // console.log("componentDidMount");
+        let code = this.props.match.params.code;
+
+        await this.loadData(code);
+        // this.state.focus
+        //     ? this.bodyInput.current.focus()
+        //     : this.bodyInput.current.blur();
     }
 
     render() {
@@ -225,13 +242,17 @@ class Note extends React.Component {
                                         modules={Note.modules}
                                         placeholder="ghi chú..."
                                         value={content}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeContent}
                                         onFocus={this.onFocus}
                                         onBlur={this.onBlur}
                                         ref={this.bodyInput}
                                     ></ReactQuill>
 
-                                    <NoteController password={password} />
+                                    <NoteController
+                                        password={password}
+                                        code={code}
+                                        submitCode={this.handleSubmitCode}
+                                    />
                                 </>
                             )}
                         </div>
