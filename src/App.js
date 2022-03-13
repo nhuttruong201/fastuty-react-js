@@ -1,15 +1,16 @@
 import "./App.css";
 import { Component } from "react";
 
-import TopBar from "./components/TopBar";
-import Navbar from "./components/Navbar";
+import TopBar from "./components/Views/TopBar";
+import Navbar from "./components/Views/Navbar";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Note from "./components/Notes/Note";
-import Chat from "./components/Chat";
-import Image from "./components/Image";
-import SearchNote from "./components/Notes/SearchNote";
+import Home from "./components/Views/Home";
+import Note from "./components/NotePages/Note";
+import SearchNote from "./components/NotePages/SearchNote";
+import BackupPage from "./components/NotePages/BackupPage";
+
+import Chat from "./components/ChatPages/Chat";
 
 class App extends Component {
     render() {
@@ -29,13 +30,15 @@ class App extends Component {
                         <Note />
                     </Route>
                     <Route path="/note/backup/:code" exact>
-                        <h1>Note Backup</h1>
+                        {/* <h1>Note Backup</h1> */}
+                        <BackupPage />
                     </Route>
                     <Route path="/chat">
                         <Chat />
                     </Route>
                     <Route path="/image">
-                        <Image />
+                        {/* <Image /> */}
+                        <h1>Fast image</h1>
                     </Route>
                 </Switch>
 

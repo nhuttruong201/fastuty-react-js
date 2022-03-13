@@ -350,3 +350,20 @@ h6,
 .border-radius-bottom-right {
     border-bottom-right-radius: 15px !important;
 }
+
+td {
+    font-size: 14px !important;
+}
+
+.table-fix-head thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    color: #fff !important;
+    background-color: #34568b !important;
+    padding: 15px 10px;
+}
+
+.btn {
+    font-family: "Open Sans" !important;
+}

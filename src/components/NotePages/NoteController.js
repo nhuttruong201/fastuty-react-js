@@ -1,7 +1,9 @@
 import React from "react";
-import ModalSecurity from "./ModalSecurity";
-
 import { withRouter } from "react-router-dom";
+
+import ModalSecurity from "./Modals/ModalSecurity";
+import ModalBackup from "./Modals/ModalBackup";
+import ModalShare from "./Modals/ModalShare";
 
 class NoteController extends React.Component {
     constructor(props) {
@@ -24,18 +26,21 @@ class NoteController extends React.Component {
             this.setState({
                 showModalShare: true,
             });
+            return;
         }
 
         if (modalName === "backup") {
             this.setState({
                 showModalBackup: true,
             });
+            return;
         }
 
         if (modalName === "security") {
             this.setState({
                 showModalSecurity: true,
             });
+            return;
         }
     };
 
@@ -100,6 +105,8 @@ class NoteController extends React.Component {
         let { showModalBackup, showModalSecurity, showModalShare } = this.state;
         let { password, inputCode } = this.state;
 
+        console.log("Check isShared from controller: ", this.props.isShared);
+
         return (
             <>
                 <div className="container-fluid">
@@ -118,7 +125,7 @@ class NoteController extends React.Component {
                                     className="btn btn-primary border-radius-top-right border-radius-bottom-right"
                                     onClick={this.handleSubmitCode}
                                 >
-                                    <i className="bi bi-search"></i>
+                                    <i className="bi bi-search"></i> Tìm
                                 </button>
                             </div>
                             <div className="pt-2 text-center">
@@ -145,14 +152,31 @@ class NoteController extends React.Component {
                                 </button>
                             </div>
 
-                            {showModalSecurity ? (
+                            {showModalSecurity && (
                                 <ModalSecurity
                                     isShow={showModalSecurity}
                                     isClose={this.closeModal}
                                     password={password}
                                     updatePassword={this.handleUpdatePassword}
                                 />
-                            ) : null}
+                            )}
+
+                            {showModalBackup && (
+                                <ModalBackup
+                                    isShow={showModalBackup}
+                                    isClose={this.closeModal}
+                                    password={password}
+                                />
+                            )}
+
+                            {showModalShare && (
+                                <ModalShare
+                                    isShow={showModalShare}
+                                    isClose={this.closeModal}
+                                    isShared={this.props.isShared}
+                                    password={password}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

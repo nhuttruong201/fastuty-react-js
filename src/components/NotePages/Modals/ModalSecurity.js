@@ -181,12 +181,18 @@ class ModalSecurity extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button
+                            className="btn-sm"
                             color="primary"
                             onClick={() => this.handleUpdatePassword()}
                         >
                             Cập nhật
                         </Button>{" "}
-                        <Button onClick={() => isClose("security")}>Huỷ</Button>
+                        <Button
+                            className="btn-sm"
+                            onClick={() => isClose("security")}
+                        >
+                            Đóng
+                        </Button>
                     </ModalFooter>
                 </Modal>
             </div>

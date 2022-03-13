@@ -14,7 +14,7 @@ class SearchNote extends React.Component {
 
     handleChangeCode = (e) => {
         this.setState({
-            code: e.target.value,
+            code: e.target.value.trim(),
         });
     };
 
@@ -74,7 +74,7 @@ class SearchNote extends React.Component {
                                 </div>
                                 <div className="form-group mt-3 text-center">
                                     <button
-                                        className="btn btn-primary mx-1"
+                                        className="btn btn-primary btn-sm mx-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "edit")
                                         }
@@ -83,7 +83,7 @@ class SearchNote extends React.Component {
                                         đến ghi chú
                                     </button>
                                     <button
-                                        className="btn btn-primary mx-1"
+                                        className="btn btn-primary btn-sm mx-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "backup")
                                         }

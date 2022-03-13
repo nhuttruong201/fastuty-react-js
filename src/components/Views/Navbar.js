@@ -7,7 +7,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+        <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-2">
             <Link to={"/"} className="navbar-brand p-0">
                 <h2 className="m-0 text-primary">
                     {/* <i className="fa fa-tooth me-2" /> */}

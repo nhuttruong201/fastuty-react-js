@@ -1,20 +1,26 @@
 import axios from "axios";
 import React from "react";
+
+// import hljs from "highlight.js";
+
 import ReactQuill from "react-quill"; // ES6
+
 import { withRouter } from "react-router-dom";
 
 import formatDateTime from "../../configs/formatDateTime";
 
 import "react-quill/dist/quill.snow.css"; // ES6
+
 import "./Note.css";
 
 import io from "socket.io-client";
-import ModalCheckPass from "./ModalCheckPass";
+import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
 const socket = io(serverHost);
+const { innerWidth: width, innerHeight: height } = window;
 
 class Note extends React.Component {
     constructor(props) {
@@ -24,6 +30,7 @@ class Note extends React.Component {
             content: "",
             code: "",
             password: "",
+            isShared: false,
             updatedAt: "",
             isConfirmedPassword: true,
             focus: false,
@@ -62,7 +69,7 @@ class Note extends React.Component {
                 password: this.state.password,
                 content: value,
             })
-            .then((response) => {
+            .then((res) => {
                 // console.log(response);
                 socket.emit("update-note", {
                     code: this.props.match.params.code,
@@ -82,13 +89,13 @@ class Note extends React.Component {
                     });
                 }, 5000);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
             });
     };
 
     handleConfirmedPassword = (data) => {
-        console.log("handleConfirmPassword from Note.js: ", data);
+        // console.log("handleConfirmPassword from Note.js: ", data);
         this.setState({
             content: data.content,
             code: data.code,
@@ -107,13 +114,15 @@ class Note extends React.Component {
     };
 
     loadData = async (code) => {
-        console.log("Load data: ", code);
+        // console.log("Load data: ", code);
 
         document.title = `Fast Note - ${code}`;
 
         let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
 
         let note = res.data.data;
+
+        console.log(note);
 
         this.setState({
             code: note.code,
@@ -128,6 +137,7 @@ class Note extends React.Component {
 
         this.setState({
             content: note.content,
+            isShared: note.isShared,
             updatedAt: formatDateTime(new Date(note.updatedAt)),
             isConfirmedPassword: true,
         });
@@ -155,7 +165,6 @@ class Note extends React.Component {
             this.setState({
                 updatedAt,
             });
-            // console.log("update-note-caller-succeed: ", updatedAt);
         });
 
         //* others
@@ -176,7 +185,6 @@ class Note extends React.Component {
     };
 
     async componentDidMount() {
-        // console.log("componentDidMount");
         let code = this.props.match.params.code;
 
         await this.loadData(code);
@@ -190,13 +198,13 @@ class Note extends React.Component {
             code,
             password,
             content,
+            isShared,
             updatedAt,
             isConfirmedPassword,
             isShowNotiUpdatedNote,
         } = this.state;
 
-        // console.log("Code: ", code, "\nPassword: ", password);
-        // console.log("API_ENDPOINT: ", process.env.REACT_APP_API_ENDPOINT);
+        console.log("Check isShared from note: ", isShared);
 
         return (
             <div
@@ -239,7 +247,7 @@ class Note extends React.Component {
 
                                     <ReactQuill
                                         theme="snow"
-                                        modules={Note.modules}
+                                        modules={this.modules}
                                         placeholder="ghi chú..."
                                         value={content}
                                         onChange={this.handleChangeContent}
@@ -251,6 +259,7 @@ class Note extends React.Component {
                                     <NoteController
                                         password={password}
                                         code={code}
+                                        isShared={isShared}
                                         submitCode={this.handleSubmitCode}
                                     />
                                 </>
@@ -261,63 +270,68 @@ class Note extends React.Component {
             </div>
         );
     }
-}
 
-const { innerWidth: width, innerHeight: height } = window;
-// alert(width);
-
-let toolbarOption =
-    width < 576
-        ? [
-              "bold",
-              "italic",
-              "underline",
-              "blockquote",
-              "code-block",
-              "image",
-              "video",
-              { list: "ordered" },
-              { list: "bullet" },
-              { color: [] },
-              { background: [] },
-              "clean",
-          ]
-        : [
-              [
+    toolbarOption =
+        width < 576
+            ? [
                   "bold",
                   "italic",
                   "underline",
-                  "link",
                   "blockquote",
                   "code-block",
-              ],
-              ["image"],
-              [{ header: 1 }, { header: 2 }],
-              [
-                  {
-                      list: "ordered",
-                  },
-                  {
-                      list: "bullet",
-                  },
-              ],
-              [
-                  {
-                      color: [],
-                  },
-                  {
-                      background: [],
-                  },
-                  {
-                      align: [],
-                  },
-              ],
+                  "image",
+                  "video",
+                  { list: "ordered" },
+                  { list: "bullet" },
+                  { color: [] },
+                  { background: [] },
+                  "clean",
+              ]
+            : [
+                  [
+                      "bold",
+                      "italic",
+                      "underline",
+                      "link",
+                      "blockquote",
+                      "code-block",
+                  ],
+                  ["image"],
+                  [{ header: 1 }, { header: 2 }],
+                  [
+                      {
+                          list: "ordered",
+                      },
+                      {
+                          list: "bullet",
+                      },
+                  ],
+                  [
+                      {
+                          color: [],
+                      },
+                      {
+                          background: [],
+                      },
+                      {
+                          align: [],
+                      },
+                  ],
 
-              ["clean"],
-          ];
+                  ["clean"],
+              ];
 
-Note.modules = {
-    toolbar: toolbarOption,
-};
+    modules = {
+        syntax: true,
+        toolbar: {
+            container: this.toolbarOption,
+            // handlers: {
+            //     insertImage: this.imageHandler,
+            //     insertVideo: this.videoHandler,
+            //     insertFile: this.fileHandler,
+            // },
+        },
+    };
+}
 
 export default withRouter(Note);
