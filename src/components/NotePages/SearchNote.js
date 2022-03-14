@@ -14,7 +14,7 @@ class SearchNote extends React.Component {
 
     handleChangeCode = (e) => {
         this.setState({
-            code: e.target.value,
+            code: e.target.value.trim(),
         });
     };
 
@@ -48,7 +48,10 @@ class SearchNote extends React.Component {
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-sm-10 col-12">
                         <div className="mx-auto mt-4 px-4 py-5 bg-white">
-                            <h4 className="text-black-50">Fastnote</h4>
+                            <h4 className="text-black-50">
+                                <span className="text-primary">Fast</span>
+                                <span className="text-secondary">Note</span>
+                            </h4>
                             <form>
                                 <div className="form-group mt-4">
                                     {errMsg ? (
@@ -71,19 +74,21 @@ class SearchNote extends React.Component {
                                 </div>
                                 <div className="form-group mt-3 text-center">
                                     <button
-                                        className="btn btn-primary mx-1"
+                                        className="btn btn-primary btn-sm mx-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "edit")
                                         }
                                     >
-                                        Đi đến ghi chú
+                                        <i className="bi bi-journals"></i> Đi
+                                        đến ghi chú
                                     </button>
                                     <button
-                                        className="btn btn-primary mx-1"
+                                        className="btn btn-primary btn-sm mx-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "backup")
                                         }
                                     >
+                                        <i className="bi bi-cloud-arrow-up-fill"></i>{" "}
                                         Đi đến lưu trữ
                                     </button>
                                 </div>

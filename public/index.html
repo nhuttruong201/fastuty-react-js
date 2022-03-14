@@ -33,6 +33,14 @@
   <!-- Template Stylesheet -->
   <link href="%PUBLIC_URL%/css/style.css" rel="stylesheet">
 
+  <script src="%PUBLIC_URL%/js/highlight.min.js"></script>
+  <!-- <script src="%PUBLIC_URL%/js/quill.js"></script> -->
+  <script>
+    hljs.configure({
+      languages: ["javascript", "ruby", "python", "rust"],
+    });
+  </script>
+
 </head>
 
 <body>
@@ -70,16 +78,6 @@
 
   <!-- Template Javascript -->
   <script src="%PUBLIC_URL%/js/main.js"></script>
-  <script>
-    // $(document).ready(() => {
-    //   $(".btn-to-top").click(() => {
-    //     $("html, body").animate({ scrollTop: 0 }, 500, "easeInOutExpo");
-    //     return false;
-    //   });
-    // });
-
-  </script>
-
 </body>
 
 </html>

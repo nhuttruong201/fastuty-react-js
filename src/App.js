@@ -1,42 +1,26 @@
 import "./App.css";
 import { Component } from "react";
 
-import TopBar from "./components/TopBar";
-import Navbar from "./components/Navbar";
-import Carousel from "./components/Carousel";
-import About from "./components/About";
-import Footer from "./components/Footer";
-import ImageItem from "./components/ImageItem";
+import TopBar from "./components/Views/TopBar";
+import Navbar from "./components/Views/Navbar";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Home from "./components/Home";
-import Note from "./components/Notes/Note";
-import Chat from "./components/Chat";
-import Image from "./components/Image";
-import ListUser from "./components/Users/ListUser";
-import DetailUser from "./components/Users/DetailUser";
-import SearchNote from "./components/Notes/SearchNote";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/Views/Home";
+import Note from "./components/NotePages/Note";
+import SearchNote from "./components/NotePages/SearchNote";
+import BackupPage from "./components/NotePages/BackupPage";
+
+import Chat from "./components/ChatPages/Chat";
+import SharePage from "./components/NotePages/Modals/SharePage";
 
 class App extends Component {
-    componentDidMount = () => {
-        // console.log("componentDidMount()");
-    };
-
     render() {
-        // console.log("Render");
         return (
             <Router>
                 <TopBar />
                 <Navbar clickToNote={this.handlePageNote} />
 
                 <Switch>
-                    <Route path="/users" exact>
-                        <ListUser />
-                    </Route>
-                    <Route path="/users/:id">
-                        <DetailUser />
-                    </Route>
-
                     <Route path="/" exact>
                         <Home />
                     </Route>
@@ -47,13 +31,16 @@ class App extends Component {
                         <Note />
                     </Route>
                     <Route path="/note/backup/:code" exact>
-                        <h1>Note Backup</h1>
+                        <BackupPage />
+                    </Route>
+                    <Route path="/note/share/:code" exact>
+                        <SharePage />
                     </Route>
                     <Route path="/chat">
                         <Chat />
                     </Route>
                     <Route path="/image">
-                        <Image />
+                        <h1>Fast image</h1>
                     </Route>
                 </Switch>
 

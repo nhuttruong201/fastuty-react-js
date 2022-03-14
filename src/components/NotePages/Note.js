@@ -1,20 +1,28 @@
 import axios from "axios";
 import React from "react";
+
+// import hljs from "highlight.js";
+
 import ReactQuill from "react-quill"; // ES6
+
 import { withRouter } from "react-router-dom";
 
 import formatDateTime from "../../configs/formatDateTime";
 
 import "react-quill/dist/quill.snow.css"; // ES6
+
 import "./Note.css";
 
 import io from "socket.io-client";
-import ModalCheckPass from "./ModalCheckPass";
+import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
+
+import { connect } from "react-redux";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
 const socket = io(serverHost);
+const { innerWidth: width, innerHeight: height } = window;
 
 class Note extends React.Component {
     constructor(props) {
@@ -24,6 +32,7 @@ class Note extends React.Component {
             content: "",
             code: "",
             password: "",
+            isShared: false,
             updatedAt: "",
             isConfirmedPassword: true,
             focus: false,
@@ -47,7 +56,7 @@ class Note extends React.Component {
         });
     };
 
-    handleChange = (value) => {
+    handleChangeContent = (value) => {
         this.setState({
             content: value,
         });
@@ -62,11 +71,11 @@ class Note extends React.Component {
                 password: this.state.password,
                 content: value,
             })
-            .then((response) => {
+            .then((res) => {
                 // console.log(response);
                 socket.emit("update-note", {
                     code: this.props.match.params.code,
-                    password: "",
+                    password: this.state.password,
                     content: value,
                 });
 
@@ -82,13 +91,13 @@ class Note extends React.Component {
                     });
                 }, 5000);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
             });
     };
 
     handleConfirmedPassword = (data) => {
-        console.log("handleConfirmPassword from Note.js: ", data);
+        // console.log("handleConfirmPassword from Note.js: ", data);
         this.setState({
             content: data.content,
             code: data.code,
@@ -96,14 +105,18 @@ class Note extends React.Component {
             updatedAt: formatDateTime(new Date(data.updatedAt)),
             isConfirmedPassword: true,
         });
+
+        // *realtime
+        this.handleRealTime(data.code);
     };
 
-    async componentDidMount() {
-        let code = this.props.match.params.code;
+    handleSubmitCode = (newCode) => {
+        this.props.history.push("/note/" + newCode);
+        this.loadData(newCode);
+    };
 
-        // this.state.focus
-        //     ? this.bodyInput.current.focus()
-        //     : this.bodyInput.current.blur();
+    loadData = async (code) => {
+        // console.log("Load data: ", code);
 
         document.title = `Fast Note - ${code}`;
 
@@ -111,11 +124,12 @@ class Note extends React.Component {
 
         let note = res.data.data;
 
-        // console.log(note.content);
+        console.log(note);
 
         this.setState({
             code: note.code,
             password: note.password,
+            isShared: note.isShared,
             isConfirmedPassword: note.password === "" ? true : false,
         });
 
@@ -130,6 +144,11 @@ class Note extends React.Component {
             isConfirmedPassword: true,
         });
 
+        // * real time
+        this.handleRealTime(code);
+    };
+
+    handleRealTime = (code) => {
         // TODO real time
         //* SEND
         socket.emit("join-room", code);
@@ -148,12 +167,11 @@ class Note extends React.Component {
             this.setState({
                 updatedAt,
             });
-            // console.log("update-note-caller-succeed: ", updatedAt);
         });
 
         //* others
         socket.on("update-note-other-succeed", (dataUpdate) => {
-            // console.log(dataUpdate);
+            console.log(dataUpdate);
             let { socketId, content, updatedAt } = dataUpdate;
             console.log("ID tao: ", socket.id, "ID mầy: ", socketId);
 
@@ -166,6 +184,22 @@ class Note extends React.Component {
                 });
             }
         });
+    };
+
+    handleUpdateShareState = (isShared) => {
+        console.log("Check share state from Note.jsL: ", isShared);
+        this.setState({
+            isShared,
+        });
+    };
+
+    async componentDidMount() {
+        let code = this.props.match.params.code;
+
+        await this.loadData(code);
+        // this.state.focus
+        //     ? this.bodyInput.current.focus()
+        //     : this.bodyInput.current.blur();
     }
 
     render() {
@@ -173,13 +207,15 @@ class Note extends React.Component {
             code,
             password,
             content,
+            isShared,
             updatedAt,
             isConfirmedPassword,
             isShowNotiUpdatedNote,
         } = this.state;
 
-        // console.log("Code: ", code, "\nPassword: ", password);
-        // console.log("API_ENDPOINT: ", process.env.REACT_APP_API_ENDPOINT);
+        console.log("Check isShared from note: ", isShared);
+
+        console.log("check props redux: ", this.props.dataRedux);
 
         return (
             <div
@@ -206,7 +242,7 @@ class Note extends React.Component {
                                         </span>
                                         &nbsp;
                                         <span className="noti-note">
-                                            <i className="bi bi-clock-history"></i>
+                                            <i className="bi bi-clock-fill"></i>
                                             {" " + updatedAt}
                                         </span>
                                         <span className="noti-note">
@@ -222,16 +258,24 @@ class Note extends React.Component {
 
                                     <ReactQuill
                                         theme="snow"
-                                        modules={Note.modules}
+                                        modules={this.modules}
                                         placeholder="ghi chú..."
                                         value={content}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeContent}
                                         onFocus={this.onFocus}
                                         onBlur={this.onBlur}
                                         ref={this.bodyInput}
                                     ></ReactQuill>
 
-                                    <NoteController password={password} />
+                                    <NoteController
+                                        password={password}
+                                        code={code}
+                                        isShared={isShared}
+                                        updateShareState={
+                                            this.handleUpdateShareState
+                                        }
+                                        submitCode={this.handleSubmitCode}
+                                    />
                                 </>
                             )}
                         </div>
@@ -240,63 +284,74 @@ class Note extends React.Component {
             </div>
         );
     }
-}
 
-const { innerWidth: width, innerHeight: height } = window;
-// alert(width);
-
-let toolbarOption =
-    width < 576
-        ? [
-              "bold",
-              "italic",
-              "underline",
-              "blockquote",
-              "code-block",
-              "image",
-              "video",
-              { list: "ordered" },
-              { list: "bullet" },
-              { color: [] },
-              { background: [] },
-              "clean",
-          ]
-        : [
-              [
+    toolbarOption =
+        width < 576
+            ? [
                   "bold",
                   "italic",
                   "underline",
-                  "link",
                   "blockquote",
                   "code-block",
-              ],
-              ["image"],
-              [{ header: 1 }, { header: 2 }],
-              [
-                  {
-                      list: "ordered",
-                  },
-                  {
-                      list: "bullet",
-                  },
-              ],
-              [
-                  {
-                      color: [],
-                  },
-                  {
-                      background: [],
-                  },
-                  {
-                      align: [],
-                  },
-              ],
+                  "image",
+                  "video",
+                  { list: "ordered" },
+                  { list: "bullet" },
+                  { color: [] },
+                  { background: [] },
+                  "clean",
+              ]
+            : [
+                  [
+                      "bold",
+                      "italic",
+                      "underline",
+                      "link",
+                      "blockquote",
+                      "code-block",
+                  ],
+                  ["image"],
+                  [{ header: 1 }, { header: 2 }],
+                  [
+                      {
+                          list: "ordered",
+                      },
+                      {
+                          list: "bullet",
+                      },
+                  ],
+                  [
+                      {
+                          color: [],
+                      },
+                      {
+                          background: [],
+                      },
+                      {
+                          align: [],
+                      },
+                  ],
 
-              ["clean"],
-          ];
+                  ["clean"],
+              ];
 
-Note.modules = {
-    toolbar: toolbarOption,
+    modules = {
+        syntax: true,
+        toolbar: {
+            container: this.toolbarOption,
+            // handlers: {
+            //     insertImage: this.imageHandler,
+            //     insertVideo: this.videoHandler,
+            //     insertFile: this.fileHandler,
+            // },
+        },
+    };
+}
+
+const mapStateToProps = (state) => {
+    return {
+        dataRedux: state.users,
+    };
 };
 
-export default withRouter(Note);
+export default connect(mapStateToProps)(withRouter(Note));
