@@ -53,7 +53,6 @@ class SharePage extends React.Component {
     async componentDidMount() {
         let code = this.props.match.params.code;
         document.title = `Note Share - ${code}`;
-        this.handleRealTime(code);
 
         await axios
             .get(API_ENDPOINT + "/api/note/" + code)
@@ -70,6 +69,8 @@ class SharePage extends React.Component {
             .catch((err) => {
                 console.log(err);
             });
+
+        this.handleRealTime(code);
     }
     render() {
         let code = this.props.match.params.code;
@@ -77,20 +78,18 @@ class SharePage extends React.Component {
 
         return (
             <>
-                {isShowBody && (
-                    <div className="container mt-3 py-3 px-4 bg-white h-75">
-                        {isShared ? (
-                            <p className="text-primary">
-                                <i className="bi bi-share"></i> {code} được chia
-                                sẻ.
-                            </p>
-                        ) : (
-                            <p className="text-danger">
-                                <i className="fas fa-exclamation"></i> Chế độ
-                                chia sẻ đang tắt!
-                            </p>
-                        )}
-
+                <div className="container mt-3 py-3 px-4 bg-white h-75">
+                    {isShared ? (
+                        <p className="text-primary">
+                            <i className="bi bi-share"></i> {code} được chia sẻ.
+                        </p>
+                    ) : (
+                        <p className="text-danger">
+                            <i className="fas fa-exclamation"></i> Chế độ chia
+                            sẻ đang tắt!
+                        </p>
+                    )}
+                    {isShowBody && (
                         <div style={{ height: "90%" }}>
                             <ReactQuill
                                 theme="bubble"
@@ -99,8 +98,8 @@ class SharePage extends React.Component {
                                 readOnly={true}
                             ></ReactQuill>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </>
         );
     }
