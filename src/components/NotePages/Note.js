@@ -17,6 +17,8 @@ import io from "socket.io-client";
 import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
 
+import { connect } from "react-redux";
+
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
 const socket = io(serverHost);
@@ -127,6 +129,7 @@ class Note extends React.Component {
         this.setState({
             code: note.code,
             password: note.password,
+            isShared: note.isShared,
             isConfirmedPassword: note.password === "" ? true : false,
         });
 
@@ -137,7 +140,6 @@ class Note extends React.Component {
 
         this.setState({
             content: note.content,
-            isShared: note.isShared,
             updatedAt: formatDateTime(new Date(note.updatedAt)),
             isConfirmedPassword: true,
         });
@@ -184,6 +186,13 @@ class Note extends React.Component {
         });
     };
 
+    handleUpdateShareState = (isShared) => {
+        console.log("Check share state from Note.jsL: ", isShared);
+        this.setState({
+            isShared,
+        });
+    };
+
     async componentDidMount() {
         let code = this.props.match.params.code;
 
@@ -205,6 +214,8 @@ class Note extends React.Component {
         } = this.state;
 
         console.log("Check isShared from note: ", isShared);
+
+        console.log("check props redux: ", this.props.dataRedux);
 
         return (
             <div
@@ -231,7 +242,7 @@ class Note extends React.Component {
                                         </span>
                                         &nbsp;
                                         <span className="noti-note">
-                                            <i className="bi bi-clock-history"></i>
+                                            <i className="bi bi-clock-fill"></i>
                                             {" " + updatedAt}
                                         </span>
                                         <span className="noti-note">
@@ -260,6 +271,9 @@ class Note extends React.Component {
                                         password={password}
                                         code={code}
                                         isShared={isShared}
+                                        updateShareState={
+                                            this.handleUpdateShareState
+                                        }
                                         submitCode={this.handleSubmitCode}
                                     />
                                 </>
@@ -334,4 +348,10 @@ class Note extends React.Component {
     };
 }
 
-export default withRouter(Note);
+const mapStateToProps = (state) => {
+    return {
+        dataRedux: state.users,
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Note));

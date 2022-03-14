@@ -11,6 +11,7 @@ import SearchNote from "./components/NotePages/SearchNote";
 import BackupPage from "./components/NotePages/BackupPage";
 
 import Chat from "./components/ChatPages/Chat";
+import SharePage from "./components/NotePages/Modals/SharePage";
 
 class App extends Component {
     render() {
@@ -30,14 +31,15 @@ class App extends Component {
                         <Note />
                     </Route>
                     <Route path="/note/backup/:code" exact>
-                        {/* <h1>Note Backup</h1> */}
                         <BackupPage />
+                    </Route>
+                    <Route path="/note/share/:code" exact>
+                        <SharePage />
                     </Route>
                     <Route path="/chat">
                         <Chat />
                     </Route>
                     <Route path="/image">
-                        {/* <Image /> */}
                         <h1>Fast image</h1>
                     </Route>
                 </Switch>

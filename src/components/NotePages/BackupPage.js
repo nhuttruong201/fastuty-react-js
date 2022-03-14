@@ -159,7 +159,7 @@ class BackupPage extends React.Component {
                                                     <i className="bi bi-eye-fill"></i>
                                                 </button>
                                                 <button
-                                                    className="btn btn-danger btn-sm"
+                                                    className="m-1 btn btn-danger btn-sm"
                                                     onClick={() =>
                                                         this.handleShowDialogConfirmDelete(
                                                             item._id,

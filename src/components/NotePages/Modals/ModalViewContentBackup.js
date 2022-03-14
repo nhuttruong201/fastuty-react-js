@@ -71,8 +71,8 @@ class ModalViewContentBackup extends React.Component {
                     size={contentView.length > 255 ? "xl" : "lg"}
                 >
                     <ModalHeader>
-                        <i className="fas fa-history"></i> Commit:
-                        <strong>{commitView}</strong>
+                        <i className="fas fa-history"></i> commit:
+                        <strong> {commitView}</strong>
                     </ModalHeader>
                     <ModalBody className="p-2">
                         {/* <div>{contentView}</div> */}
@@ -80,7 +80,7 @@ class ModalViewContentBackup extends React.Component {
                             <ReactQuill
                                 theme="bubble"
                                 // modules={Note.modules}
-                                placeholder="ghi chú..."
+                                placeholder="đang tải nội dung sao lưu..."
                                 value={contentView}
                                 readOnly={true}
                             ></ReactQuill>

@@ -16,6 +16,7 @@ class NoteController extends React.Component {
             currentCode: "",
             inputCode: "",
             password: "",
+            isShared: false,
         };
     }
 
@@ -86,14 +87,13 @@ class NoteController extends React.Component {
     };
 
     handleSubmitCode = () => {
-        // console.log(this.state.inputCode);
         let inputCode = this.state.inputCode;
-        // this.props.history.push("/note/" + inputCode);
         this.props.submitCode(inputCode);
     };
 
     componentDidMount() {
         this.setState({
+            isShared: this.props.isShared,
             currentCode: this.props.code,
             inputCode: this.props.match.params.code,
             password: this.props.password,
@@ -101,11 +101,10 @@ class NoteController extends React.Component {
     }
 
     render() {
-        // console.log(this.state);
         let { showModalBackup, showModalSecurity, showModalShare } = this.state;
-        let { password, inputCode } = this.state;
+        let { password, inputCode, isShared } = this.state;
 
-        console.log("Check isShared from controller: ", this.props.isShared);
+        console.log("Check isShared from controller: ", isShared);
 
         return (
             <>
@@ -174,7 +173,11 @@ class NoteController extends React.Component {
                                     isShow={showModalShare}
                                     isClose={this.closeModal}
                                     isShared={this.props.isShared}
+                                    updateShareState={
+                                        this.props.updateShareState
+                                    }
                                     password={password}
+                                    code={this.props.code}
                                 />
                             )}
                         </div>

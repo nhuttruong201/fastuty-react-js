@@ -25,15 +25,15 @@ class BackupController extends React.Component {
                                     <i className="bi bi-search"></i> Tìm
                                 </button>
                             </div> */}
-                            <div className="pt-2 text-center mt-2">
+                            <div className="pt-2 text-center">
                                 <Link to={"/note/" + code}>
-                                    <button className="btn btn-sm btn-primary">
+                                    <button className="btn btn-sm btn-primary m-1">
                                         <i className="bi bi-journals"></i>
                                         &nbsp;Nội dung hiện tại
                                     </button>
                                 </Link>
                                 <Link to={"/note"}>
-                                    <button className="btn btn-sm btn-primary mx-2">
+                                    <button className="btn btn-sm btn-primary m-1">
                                         <i className="fas fa-plus"></i>
                                         &nbsp;Tạo ghi chú mới
                                     </button>

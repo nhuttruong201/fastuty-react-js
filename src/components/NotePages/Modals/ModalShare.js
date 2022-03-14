@@ -1,14 +1,53 @@
 import React from "react";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import axios from "axios";
+import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 class ModalShare extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isShared: this.props.isShared,
+            okMsg: null,
+            errMsg: null,
         };
     }
+
+    handleChangeStateShare = async (e) => {
+        let isChecked = e.target.checked;
+        console.log("handleChangeStateShare: ", isChecked);
+
+        // this.setState({
+        //     isOnPassword: isChecked,
+        //     password: isChecked ? this.state.password : "",
+        // });
+        await axios
+            .put(API_ENDPOINT + "/api/note/update-share-state", {
+                code: this.props.code,
+                password: this.props.password,
+                isShared: isChecked,
+            })
+            .then((res) => {
+                console.log(res);
+                this.setState({
+                    errMsg: null,
+                    okMsg:
+                        "Đã " +
+                        (isChecked ? " bật " : " Tắt ") +
+                        " chế độ chia sẻ!",
+                });
+
+                this.props.updateShareState(isChecked);
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    okMsg: null,
+                    errMsg: "Đã xảy ra lỗi!",
+                });
+            });
+    };
 
     componentDidMount() {
         this.setState({
@@ -17,7 +56,7 @@ class ModalShare extends React.Component {
     }
 
     render() {
-        let { isShared } = this.state;
+        let { isShared, okMsg, errMsg } = this.state;
         let { isClose } = this.props;
 
         console.log("Check isShared: ", isShared);
@@ -59,17 +98,17 @@ class ModalShare extends React.Component {
                             </div>
                         </div>
 
-                        {/* {errMsg ? (
+                        {errMsg && (
                             <Alert color="danger mt-2">
                                 <i className="bi bi-exclamation-diamond-fill"></i>{" "}
                                 {errMsg}
                             </Alert>
-                        ) : null}
-                        {okMsg ? (
+                        )}
+                        {okMsg && (
                             <Alert color="success mt-2">
                                 <i className="bi bi-check2-circle"></i> {okMsg}
                             </Alert>
-                        ) : null} */}
+                        )}
                     </ModalBody>
                     <ModalFooter>
                         <button className="btn btn-primary btn-sm">
