@@ -79,7 +79,7 @@ class ModalViewContentBackup extends React.Component {
                         <div>
                             <ReactQuill
                                 theme="bubble"
-                                // modules={Note.modules}
+                                modules={this.modules}
                                 placeholder="đang tải nội dung sao lưu..."
                                 value={contentView}
                                 readOnly={true}
@@ -110,6 +110,18 @@ class ModalViewContentBackup extends React.Component {
             </div>
         );
     }
+
+    modules = {
+        syntax: true,
+        toolbar: {
+            container: null,
+            // handlers: {
+            //     insertImage: this.imageHandler,
+            //     insertVideo: this.videoHandler,
+            //     insertFile: this.fileHandler,
+            // },
+        },
+    };
 }
 
 export default ModalViewContentBackup;

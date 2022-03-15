@@ -94,6 +94,7 @@ class SharePage extends React.Component {
                             <ReactQuill
                                 theme="bubble"
                                 placeholder="chưa có nội dung..."
+                                modules={this.modules}
                                 value={content}
                                 readOnly={true}
                             ></ReactQuill>
@@ -103,6 +104,13 @@ class SharePage extends React.Component {
             </>
         );
     }
+
+    modules = {
+        syntax: true,
+        toolbar: {
+            container: null,
+        },
+    };
 }
 
 export default withRouter(SharePage);
