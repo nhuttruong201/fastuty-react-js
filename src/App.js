@@ -17,7 +17,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <TopBar />
+                {/* <TopBar /> */}
                 <Navbar clickToNote={this.handlePageNote} />
 
                 <Switch>
