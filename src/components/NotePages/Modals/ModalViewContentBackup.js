@@ -4,6 +4,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css"; // ES6
 
 import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import DialogConfirmRestore from "../Confirms/DialogConfirmRestore";
+
+import { withRouter } from "react-router-dom";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -15,9 +18,15 @@ class ModalViewContentBackup extends React.Component {
             contentView: "",
             commitView: "",
             backupIdView: "",
-            okMsg: "",
+            showDialogConfirmRestore: false,
         };
     }
+
+    handleShowHideDialogConfirmRestore = (isShow) => {
+        this.setState({
+            showDialogConfirmRestore: isShow,
+        });
+    };
 
     handleRestore = async (backupId) => {
         console.log("Restore: ", backupId);
@@ -28,12 +37,13 @@ class ModalViewContentBackup extends React.Component {
             .then((res) => {
                 console.log("res from handleRetore: ", res);
                 if (res.data.status === 200) {
-                    this.setState({
-                        okMsg: "Khôi phục thành công!",
-                    });
+                    this.props.history.push(
+                        "/note/" + this.props.match.params.code
+                    );
                 }
             })
             .catch((err) => {
+                alert("Đã xảy ra lỗi!");
                 console.log("err from handleRetore: ", err);
             });
     };
@@ -60,7 +70,13 @@ class ModalViewContentBackup extends React.Component {
 
     render() {
         let { close } = this.props;
-        let { contentView, commitView, backupIdView, okMsg } = this.state;
+        let {
+            contentView,
+            commitView,
+            backupIdView,
+            showDialogConfirmRestore,
+        } = this.state;
+
         return (
             <div>
                 <Modal
@@ -75,26 +91,22 @@ class ModalViewContentBackup extends React.Component {
                         <strong> {commitView}</strong>
                     </ModalHeader>
                     <ModalBody className="p-2">
-                        {/* <div>{contentView}</div> */}
                         <div>
                             <ReactQuill
                                 theme="bubble"
-                                // modules={Note.modules}
+                                modules={this.modules}
                                 placeholder="đang tải nội dung sao lưu..."
                                 value={contentView}
                                 readOnly={true}
                             ></ReactQuill>
                         </div>
-                        {okMsg ? (
-                            <Alert color="success mt-3">
-                                <i className="bi bi-check2-circle"></i> {okMsg}
-                            </Alert>
-                        ) : null}
                     </ModalBody>
                     <ModalFooter>
                         <button
                             className="btn btn-primary btn-sm"
-                            onClick={() => this.handleRestore(backupIdView)}
+                            onClick={() =>
+                                this.handleShowHideDialogConfirmRestore(true)
+                            }
                         >
                             <i className="fas fa-undo-alt"></i> Khôi phục nội
                             dung
@@ -107,9 +119,25 @@ class ModalViewContentBackup extends React.Component {
                         </button>
                     </ModalFooter>
                 </Modal>
+
+                {showDialogConfirmRestore && (
+                    <DialogConfirmRestore
+                        backupId={backupIdView}
+                        commit={commitView}
+                        close={this.handleShowHideDialogConfirmRestore}
+                        confirm={this.handleRestore}
+                    />
+                )}
             </div>
         );
     }
+
+    modules = {
+        syntax: true,
+        toolbar: {
+            container: null,
+        },
+    };
 }
 
-export default ModalViewContentBackup;
+export default withRouter(ModalViewContentBackup);

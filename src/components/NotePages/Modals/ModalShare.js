@@ -49,6 +49,17 @@ class ModalShare extends React.Component {
             });
     };
 
+    handleCopyLinkShare = () => {
+        let linkShare =
+            window.location.origin + "/note/share/" + this.props.code;
+        // console.log(linkShare);
+        navigator.clipboard.writeText(linkShare);
+        this.setState({
+            errMsg: null,
+            okMsg: "Đã sao chép link chia sẻ",
+        });
+    };
+
     componentDidMount() {
         this.setState({
             isShared: this.props.isShared,
@@ -111,7 +122,10 @@ class ModalShare extends React.Component {
                         )}
                     </ModalBody>
                     <ModalFooter>
-                        <button className="btn btn-primary btn-sm">
+                        <button
+                            className="btn btn-primary btn-sm"
+                            onClick={() => this.handleCopyLinkShare()}
+                        >
                             <i className="fas fa-link"></i> Nhận liên kết chia
                             sẻ
                         </button>

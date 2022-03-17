@@ -40,7 +40,7 @@ function Navbar() {
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
-                        Note
+                        Fast Note
                     </NavLink>
                     <NavLink
                         to="/chat"
@@ -48,7 +48,7 @@ function Navbar() {
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
-                        Chat
+                        Fast Chat
                     </NavLink>
                     <NavLink
                         to="/image"
@@ -56,7 +56,7 @@ function Navbar() {
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
-                        Image
+                        Fast Image
                     </NavLink>
                 </div>
             </div>

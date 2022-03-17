@@ -13,11 +13,10 @@ import "react-quill/dist/quill.snow.css"; // ES6
 
 import "./Note.css";
 
-import io from "socket.io-client";
 import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
-
 import { connect } from "react-redux";
+import io from "socket.io-client";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
@@ -83,13 +82,13 @@ class Note extends React.Component {
                     this.setState({
                         isShowNotiUpdatedNote: true,
                     });
-                }, 1000);
+                }, 500);
 
                 setTimeout(() => {
                     this.setState({
                         isShowNotiUpdatedNote: false,
                     });
-                }, 5000);
+                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
@@ -238,7 +237,7 @@ class Note extends React.Component {
                                     <div className="mb-2 px-md-0 px-2">
                                         <span className="code-note">
                                             <i className="bi bi-pencil-fill"></i>
-                                            {" " + code + " - "}
+                                            {" " + code + " "}
                                         </span>
                                         &nbsp;
                                         <span className="noti-note">
