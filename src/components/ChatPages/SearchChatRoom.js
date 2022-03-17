@@ -19,7 +19,7 @@ const SearchChatRoom = (props) => {
     const handleJoinRoom = (e) => {
         e.preventDefault();
         if (roomId === "") {
-            setErrMsg("Bạn chưa nhập mã phòng!");
+            setErrMsg("Bạn chưa nhập đủ thông tin!");
             return;
         }
 
@@ -51,21 +51,20 @@ const SearchChatRoom = (props) => {
                                     type={"text"}
                                     value={roomId}
                                     placeholder="nhập mã phòng chat..."
-                                    autoFocus
                                     className="form-control text-center"
                                     onChange={(e) => handleChangeRoomId(e)}
                                 />
                             </div>
                             <div className="form-group mt-3 text-center">
                                 <button
-                                    className="btn btn-primary btn-sm mx-1"
+                                    className="btn btn-primary btn-sm m-1"
                                     onClick={(e) => handleJoinRoom(e)}
                                 >
                                     <i className="fas fa-sign-in-alt"></i> Tạo
                                     hoặc tham gia
                                 </button>
                                 <button
-                                    className="btn btn-primary btn-sm mx-1"
+                                    className="btn btn-primary btn-sm m-1"
                                     onClick={(e) => handleRandomRoomId(e)}
                                 >
                                     <i className="fas fa-random"></i> Tạo mã
@@ -73,17 +72,20 @@ const SearchChatRoom = (props) => {
                                 </button>
                             </div>
                         </form>
+                        <p
+                            className="text-center p-4 text-black-50"
+                            style={{ fontSize: "14px" }}
+                        >
+                            <span>
+                                Những người cùng mã phòng sẽ chat được với nhau.
+                            </span>
+                            <br></br>
+                            <span>
+                                Tất cả tin nhắn sẽ biến mất sau khi cuộc trò
+                                chuyện kết thúc.
+                            </span>
+                        </p>
                     </div>
-                    {/* <p
-                        className="text-center p-4 text-black-50"
-                        style={{ fontSize: "14px" }}
-                    >
-                        <span>
-                            Mỗi mã ghi chú sẽ chứa một nội dung ghi chú riêng.
-                        </span>
-                        <br></br>
-                        <span>Đừng quên sao lưu những ghi chú quan trọng.</span>
-                    </p> */}
                 </div>
             </div>
         </div>

@@ -218,7 +218,7 @@ class Note extends React.Component {
 
         return (
             <div
-                className="container-fluid h-100 p-0"
+                className="container-fluid main-container-note"
                 style={{ overflow: "hidden" }}
             >
                 <div className="row justify-content-center h-100">

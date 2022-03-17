@@ -11,7 +11,7 @@ const Chat = (props) => {
 
     return (
         <>
-            <div className="container mt-3 px-0 h-75">
+            <div className="container main-container-chat p-0">
                 <div className="bg-white">
                     <HeaderChat />
                 </div>
