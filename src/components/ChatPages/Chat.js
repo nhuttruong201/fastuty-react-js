@@ -1,17 +1,28 @@
-import React from "react";
+import { withRouter } from "react-router-dom";
+import ChatArea from "./ChatArea";
+import ConversationArea from "./ConversationArea";
+import HeaderChat from "./HeaderChat";
 
-class Chat extends React.Component {
-    state = {
-        check: false,
-    };
+import "./normalize.min.css";
+import "./Chat.css";
 
-    componentDidMount() {
-        document.title = "Fast Chat";
-    }
+const Chat = (props) => {
+    let roomId = props.match.params.roomId;
 
-    render() {
-        return <>{this.state.check ? <p>Hello</p> : <p>False</p>}</>;
-    }
-}
+    return (
+        <>
+            <div className="container mt-3 px-0 h-75">
+                <div className="bg-white">
+                    <HeaderChat />
+                </div>
 
-export default Chat;
+                <div className="wrapper h-100 bg-white">
+                    <ConversationArea />
+                    <ChatArea roomId={roomId} listMessages={[]} />
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default withRouter(Chat);

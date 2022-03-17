@@ -95,8 +95,8 @@ class SearchNote extends React.Component {
                             </form>
                         </div>
                         <p
-                            className="text-center p-4"
-                            style={{ fontSize: "13px" }}
+                            className="text-center p-4 text-black-50"
+                            style={{ fontSize: "14px" }}
                         >
                             <span>
                                 Mỗi mã ghi chú sẽ chứa một nội dung ghi chú

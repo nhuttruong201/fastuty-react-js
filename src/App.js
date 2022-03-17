@@ -12,6 +12,7 @@ import BackupPage from "./components/NotePages/BackupPage";
 
 import Chat from "./components/ChatPages/Chat";
 import SharePage from "./components/NotePages/Modals/SharePage";
+import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
 
 class App extends Component {
     render() {
@@ -36,7 +37,10 @@ class App extends Component {
                     <Route path="/note/share/:code" exact>
                         <SharePage />
                     </Route>
-                    <Route path="/chat">
+                    <Route path="/chat" exact>
+                        <SearchChatRoom />
+                    </Route>
+                    <Route path="/chat/:roomId" exact>
                         <Chat />
                     </Route>
                     <Route path="/image">

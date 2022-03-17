@@ -367,3 +367,7 @@ td {
 .btn {
     font-family: "Open Sans" !important;
 }
+
+.text-size-14 {
+    font-size: 14px !important;
+}

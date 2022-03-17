@@ -13,11 +13,10 @@ import "react-quill/dist/quill.snow.css"; // ES6
 
 import "./Note.css";
 
-import io from "socket.io-client";
 import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
-
 import { connect } from "react-redux";
+import io from "socket.io-client";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
