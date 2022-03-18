@@ -5,6 +5,7 @@ import ChatMessage from "./ChatMessage";
 import io from "socket.io-client";
 import ShowInfo from "./ShowInfo";
 import ShowUserOnline from "./ShowUserOnline";
+import ConversationArea from "./ConversationArea";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
@@ -12,13 +13,14 @@ const socket = io(serverHost);
 
 const ChatArea = (props) => {
     const [textMessage, setTextMessage] = useState("");
-    const [displayName, setDisplayName] = useState("");
-
-    const [timeLoad, setTimLoad] = useState(new Date());
+    const [displayName, setDisplayName] = useState(randomId(10));
+    const [joinedAt, setJoinedAt] = useState("");
+    const [users, setUsers] = useState([]);
+    const [timeLoad, setTimeLoad] = useState(null);
 
     const messagesEndRef = useRef(null);
 
-    const listMessages = props.listMessages;
+    let listMessages = props.listMessages;
 
     const handleOnChangeTextMessage = (e) => {
         setTextMessage(e.target.value);
@@ -50,10 +52,15 @@ const ChatArea = (props) => {
     };
 
     const handleChatRealtime = (roomId) => {
+        console.log("Check disname from realtime: ", displayName);
         // TODO real time
-        socket.emit("join-chat-room", props.roomId);
-        socket.on("join-chat-room-success", (msg) => {
-            console.log(msg);
+        socket.emit("join-chat-room", { roomId, displayName });
+
+        socket.on("join-chat-room-succeeded", (dataJoined) => {
+            console.log(dataJoined);
+            let { message, joinedAt, users } = dataJoined;
+            setJoinedAt(joinedAt);
+            setUsers(users.filter((user) => user.displayName !== displayName));
         });
 
         //* RECEIVE
@@ -72,10 +79,22 @@ const ChatArea = (props) => {
             );
 
             setTextMessage("");
-            setTimLoad(new Date());
+            setTimeLoad(new Date());
         });
 
         //* others
+        socket.on("get-all-users", (dataUsers) => {
+            console.log("get-all-users: ", dataUsers);
+
+            dataUsers.map((item) => console.log(displayName, item.displayName));
+
+            setTimeout(() => {
+                setUsers(
+                    dataUsers.filter((user) => user.displayName !== displayName)
+                );
+            }, 2000);
+        });
+
         socket.on("send-message-others-succeed", (dataMessage) => {
             let { senderName, textMessage, time } = dataMessage;
             console.log(
@@ -94,13 +113,19 @@ const ChatArea = (props) => {
                 />
             );
 
-            setTimLoad(new Date());
+            setTimeLoad(new Date());
         });
     };
 
     const handleChangeDisplayName = (newDisName) => {
         console.log("handleChangeDisplayName from ChatArea: ", newDisName);
+
         setDisplayName(newDisName);
+
+        socket.emit("update-disname", {
+            roomId: props.roomId,
+            newDisName,
+        });
     };
 
     const scrollToBottom = () => {
@@ -109,9 +134,13 @@ const ChatArea = (props) => {
 
     useEffect(() => {
         document.title = "Fast Chat - " + props.roomId;
-        setDisplayName(randomId(10));
         handleChatRealtime(props.roomId);
     }, [props.roomId]);
+
+    // useEffect(() => {
+    //     console.log("set disname: ", displayName);
+    //     // handleChatRealtime(props.roomId);
+    // }, [displayName]);
 
     useEffect(() => {
         scrollToBottom();
@@ -119,11 +148,16 @@ const ChatArea = (props) => {
 
     return (
         <>
+            <ConversationArea
+                myInfo={{ joinedAt, displayName }}
+                users={users}
+            />
+            <ShowUserOnline myInfo={{ joinedAt, displayName }} users={users} />
+
             <ShowInfo
                 displayName={displayName}
                 setDisplayName={handleChangeDisplayName}
             />
-            <ShowUserOnline />
 
             <div className="chat-area">
                 <div className="chat-area-header">

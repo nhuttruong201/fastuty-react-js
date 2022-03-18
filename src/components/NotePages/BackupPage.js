@@ -16,6 +16,7 @@ class BackupPage extends React.Component {
         super();
 
         this.state = {
+            isLoading: true,
             data: [],
             isShowModalViewContent: false,
             showDialogConfirmDelete: false,
@@ -82,22 +83,26 @@ class BackupPage extends React.Component {
         let { code } = this.props.match.params;
         document.title = `Note Backup - ${code}`;
 
-        await axios
-            .get(API_ENDPOINT + "/api/note/backup/" + code)
-            .then((res) => {
-                console.log(res);
-                this.setState({
-                    data: res.data.data,
+        setTimeout(async () => {
+            await axios
+                .get(API_ENDPOINT + "/api/note/backup/" + code)
+                .then((res) => {
+                    console.log(res);
+                    this.setState({
+                        data: res.data.data,
+                        isLoading: false,
+                    });
+                })
+                .catch((err) => {
+                    console.log("err from call api get backup by code: ", err);
                 });
-            })
-            .catch((err) => {
-                console.log("err from call api get backup by code: ", err);
-            });
+        }, 2000);
     }
 
     render() {
         let {
             data,
+            isLoading,
             isShowModalViewContent,
             showDialogConfirmDelete,
             commitDelete,
@@ -136,6 +141,14 @@ class BackupPage extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
+                            {isLoading && (
+                                <tr>
+                                    <td colSpan="4" className="text-center">
+                                        Đang tải dữ liệu...
+                                    </td>
+                                </tr>
+                            )}
+
                             {data &&
                                 data.map((item, index) => {
                                     return (

@@ -17,7 +17,7 @@ const Chat = (props) => {
                 </div>
 
                 <div className="wrapper h-100 bg-white">
-                    <ConversationArea />
+                    {/* <ConversationArea /> */}
                     <ChatArea roomId={roomId} listMessages={[]} />
                 </div>
             </div>
