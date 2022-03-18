@@ -137,7 +137,7 @@ class ModalBackup extends React.Component {
                             <Link to={"/note/backup/" + code}>
                                 <button className="btn btn-primary btn-sm">
                                     <i className="bi bi-cloud-arrow-up-fill"></i>{" "}
-                                    Xem kho lưu trữ
+                                    Kho lưu trữ
                                 </button>
                             </Link>
                         </div>

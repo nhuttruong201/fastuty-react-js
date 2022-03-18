@@ -1,13 +1,8 @@
 import axios from "axios";
 import React from "react";
 
-// import hljs from "highlight.js";
-
 import ReactQuill from "react-quill"; // ES6
-
 import { withRouter } from "react-router-dom";
-
-import formatDateTime from "../../configs/formatDateTime";
 
 import "react-quill/dist/quill.snow.css"; // ES6
 
@@ -17,6 +12,7 @@ import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
 import { connect } from "react-redux";
 import io from "socket.io-client";
+import moment from "moment";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
@@ -28,6 +24,7 @@ class Note extends React.Component {
         super(props);
 
         this.state = {
+            isLoading: true,
             content: "",
             code: "",
             password: "",
@@ -96,12 +93,14 @@ class Note extends React.Component {
     };
 
     handleConfirmedPassword = (data) => {
-        // console.log("handleConfirmPassword from Note.js: ", data);
         this.setState({
+            isLoading: false,
             content: data.content,
             code: data.code,
             password: data.password,
-            updatedAt: formatDateTime(new Date(data.updatedAt)),
+            updatedAt: moment(new Date(data.updatedAt)).format(
+                "DD/MM/YYYY hh:mm:ss A"
+            ),
             isConfirmedPassword: true,
         });
 
@@ -111,19 +110,17 @@ class Note extends React.Component {
 
     handleSubmitCode = (newCode) => {
         this.props.history.push("/note/" + newCode);
-        this.loadData(newCode);
+        this.fetchData(newCode);
     };
 
-    loadData = async (code) => {
-        // console.log("Load data: ", code);
-
+    fetchData = async (code) => {
+        // console.log("fetchData: ", code);
         document.title = `Fast Note - ${code}`;
 
         let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
-
         let note = res.data.data;
 
-        console.log(note);
+        // console.log(note);
 
         this.setState({
             code: note.code,
@@ -138,8 +135,9 @@ class Note extends React.Component {
         }
 
         this.setState({
+            isLoading: false,
             content: note.content,
-            updatedAt: formatDateTime(new Date(note.updatedAt)),
+            updatedAt: moment(note.updatedAt).format("DD/MM/YYYY hh:mm:ss A"),
             isConfirmedPassword: true,
         });
 
@@ -195,7 +193,7 @@ class Note extends React.Component {
     async componentDidMount() {
         let code = this.props.match.params.code;
 
-        await this.loadData(code);
+        await this.fetchData(code);
         // this.state.focus
         //     ? this.bodyInput.current.focus()
         //     : this.bodyInput.current.blur();
@@ -203,6 +201,7 @@ class Note extends React.Component {
 
     render() {
         let {
+            isLoading,
             code,
             password,
             content,
@@ -212,13 +211,12 @@ class Note extends React.Component {
             isShowNotiUpdatedNote,
         } = this.state;
 
-        console.log("Check isShared from note: ", isShared);
-
-        console.log("check props redux: ", this.props.dataRedux);
+        // console.log("Check isShared from note: ", isShared);
+        // console.log("check props redux: ", this.props.dataRedux);
 
         return (
             <div
-                className="container-fluid h-100 p-0"
+                className="container-fluid p-0 main-container-note"
                 style={{ overflow: "hidden" }}
             >
                 <div className="row justify-content-center h-100">
@@ -234,25 +232,33 @@ class Note extends React.Component {
                                 </>
                             ) : (
                                 <>
-                                    <div className="mb-2 px-md-0 px-2">
-                                        <span className="code-note">
-                                            <i className="bi bi-pencil-fill"></i>
-                                            {" " + code + " "}
-                                        </span>
-                                        &nbsp;
-                                        <span className="noti-note">
-                                            <i className="bi bi-clock-fill"></i>
-                                            {" " + updatedAt}
-                                        </span>
-                                        <span className="noti-note">
-                                            {isShowNotiUpdatedNote ? (
-                                                <>
-                                                    {" "}
-                                                    <i className="bi bi-check"></i>
-                                                    Đã lưu
-                                                </>
-                                            ) : null}
-                                        </span>
+                                    <div className="mb-2 px-2">
+                                        {isLoading ? (
+                                            <span className="text-black-50">
+                                                Đang tải dữ liệu...
+                                            </span>
+                                        ) : (
+                                            <>
+                                                <span className="code-note text-black-50">
+                                                    <i className="bi bi-pencil-fill"></i>
+                                                    {" " + code + " "}
+                                                </span>
+                                                &nbsp;
+                                                <span className="noti-note">
+                                                    <i className="bi bi-clock-fill"></i>
+                                                    {" " + updatedAt}
+                                                </span>
+                                                <span className="noti-note">
+                                                    {isShowNotiUpdatedNote && (
+                                                        <>
+                                                            {" "}
+                                                            <i className="bi bi-check"></i>
+                                                            Đã lưu
+                                                        </>
+                                                    )}
+                                                </span>
+                                            </>
+                                        )}
                                     </div>
 
                                     <ReactQuill

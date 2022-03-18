@@ -11,13 +11,13 @@ const Chat = (props) => {
 
     return (
         <>
-            <div className="container mt-3 px-0 h-75">
+            <div className="container main-container-chat p-0">
                 <div className="bg-white">
                     <HeaderChat />
                 </div>
 
                 <div className="wrapper h-100 bg-white">
-                    <ConversationArea />
+                    {/* <ConversationArea /> */}
                     <ChatArea roomId={roomId} listMessages={[]} />
                 </div>
             </div>

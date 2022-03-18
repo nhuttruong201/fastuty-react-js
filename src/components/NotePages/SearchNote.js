@@ -60,7 +60,6 @@ class SearchNote extends React.Component {
                                             {errMsg}
                                         </p>
                                     ) : null}
-                                    {/* <label>Mã ghi chú</label> */}
                                     <input
                                         type={"text"}
                                         value={this.state.code}
@@ -93,20 +92,20 @@ class SearchNote extends React.Component {
                                     </button>
                                 </div>
                             </form>
+                            <p
+                                className="text-center p-4 text-black-50"
+                                style={{ fontSize: "14px" }}
+                            >
+                                <span>
+                                    Mỗi mã ghi chú sẽ chứa một nội dung ghi chú
+                                    riêng.
+                                </span>
+                                <br></br>
+                                <span>
+                                    Đừng quên sao lưu những ghi chú quan trọng.
+                                </span>
+                            </p>
                         </div>
-                        <p
-                            className="text-center p-4 text-black-50"
-                            style={{ fontSize: "14px" }}
-                        >
-                            <span>
-                                Mỗi mã ghi chú sẽ chứa một nội dung ghi chú
-                                riêng.
-                            </span>
-                            <br></br>
-                            <span>
-                                Đừng quên sao lưu những ghi chú quan trọng.
-                            </span>
-                        </p>
                     </div>
                 </div>
             </div>

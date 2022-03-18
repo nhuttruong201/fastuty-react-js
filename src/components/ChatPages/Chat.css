@@ -155,6 +155,7 @@ html {
 }
 
 .conversation-area,
+.conversation-area-mobile,
 .detail-area {
     width: 340px;
     flex-shrink: 0;
@@ -173,12 +174,31 @@ html {
     flex-grow: 1;
 }
 
+.button-video-call {
+    height: 80px;
+    line-height: 80px;
+    z-index: 3;
+    position: relative;
+    margin-left: 300px;
+}
+
+.button-video-call i {
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 25px;
+}
+.button-video-call i:hover {
+    color: rgba(0, 0, 0, 0.3);
+}
+
 .search-bar {
     height: 80px;
     z-index: 3;
     position: relative;
     margin-left: 280px;
 }
+
 .search-bar input {
     height: 100%;
     width: 100%;
@@ -206,6 +226,7 @@ html {
 }
 .logo svg {
     width: 100%;
+    cursor: pointer;
 }
 
 .user-settings {
@@ -244,7 +265,8 @@ html {
     flex-shrink: 0;
 }
 
-.conversation-area {
+.conversation-area,
+.conversation-area-mobile {
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
     overflow-x: hidden;
@@ -761,8 +783,9 @@ html {
         display: none;
     }
 
-    .search-bar {
-        margin-left: 0;
+    .search-bar,
+    .button-video-call {
+        margin-left: 15px;
         flex-grow: 1;
     }
     .search-bar input {

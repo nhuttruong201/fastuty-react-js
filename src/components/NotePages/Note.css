@@ -21,7 +21,7 @@
 
 .editor {
     width: 100%;
-    height: 60%;
+    height: calc(100% - 160px);
 }
 
 .editor-controller {
@@ -30,6 +30,7 @@
 
 .noti-note {
     color: #34be82 !important;
+    /* color: #06a3da; */
     font-weight: 600;
     font-size: 14px;
 }
