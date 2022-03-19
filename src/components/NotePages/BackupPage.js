@@ -1,13 +1,11 @@
 import axios from "axios";
 import React from "react";
-import { Alert, Button } from "reactstrap";
 import { withRouter } from "react-router-dom";
-
-import formatDateTime from "../../configs/formatDateTime";
 import ModalViewContentBackup from "./Modals/ModalViewContentBackup";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import BackupController from "./BackupController";
 import DialogConfirmDelete from "./DialogConfirmDelete";
+import moment from "moment";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -156,9 +154,9 @@ class BackupPage extends React.Component {
                                             <td>{index + 1}</td>
                                             <td>{item.commit}</td>
                                             <td>
-                                                {formatDateTime(
+                                                {moment(
                                                     new Date(item.createdAt)
-                                                )}
+                                                ).format("DD/MM/YYYY hh:mm A")}
                                             </td>
                                             <td>
                                                 <button

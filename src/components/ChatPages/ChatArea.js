@@ -89,10 +89,14 @@ const ChatArea = (props) => {
         socket.emit("join-chat-room", { roomId, displayName });
 
         socket.on("join-chat-room-succeeded", (dataJoined) => {
+            console.log(socket.id);
             // console.log(dataJoined);
             let { message, joinedAt, users } = dataJoined;
+
+            console.log("join-chat-room-succeeded: ", users);
+
             setJoinedAt(joinedAt);
-            setUsers(users);
+            setUsers(users.filter((user) => user.clientId !== socket.id));
         });
 
         //* RECEIVE
@@ -115,10 +119,8 @@ const ChatArea = (props) => {
 
         //* others
         socket.on("get-all-users", (dataUsers) => {
-            // console.log("get-all-users: ", dataUsers);
-            setTimeout(() => {
-                setUsers(dataUsers);
-            }, 2000);
+            console.log("get-all-users: ", dataUsers);
+            setUsers(dataUsers.filter((user) => user.clientId !== socket.id));
         });
 
         socket.on("send-message-others-succeed", (dataMessage) => {
@@ -146,11 +148,13 @@ const ChatArea = (props) => {
 
     const handleChangeDisplayName = (newDisName) => {
         // console.log("handleChangeDisplayName from ChatArea: ", newDisName);
-        setDisplayName(newDisName);
+
         socket.emit("update-disname", {
             roomId: props.roomId,
             newDisName,
         });
+
+        setDisplayName(newDisName);
     };
 
     const scrollToBottom = () => {
