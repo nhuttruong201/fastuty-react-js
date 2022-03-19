@@ -1,6 +1,8 @@
-import ConversationArea from "./ConversationArea";
+import { useState } from "react";
 
-const HeaderChat = () => {
+const HeaderChat = (props) => {
+    let { avatar } = props;
+
     const handleLeaveChatRoom = () => {
         alert("leave chat room");
     };
@@ -78,7 +80,8 @@ const HeaderChat = () => {
 
                     <img
                         className="user-profile"
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
+                        // src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
+                        src={avatar}
                         alt=""
                         data-bs-toggle="offcanvas"
                         data-bs-target="#showInfo"

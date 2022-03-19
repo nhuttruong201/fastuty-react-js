@@ -20,18 +20,7 @@ const Chat = (props) => {
         // };
     });
 
-    return (
-        <>
-            <div className="container main-container-chat p-0">
-                <div className="bg-white">
-                    <HeaderChat />
-                </div>
-                <div className="wrapper bg-white h-100">
-                    <ChatArea roomId={roomId} listMessages={[]} />
-                </div>
-            </div>
-        </>
-    );
+    return <ChatArea roomId={roomId} listMessages={[]} />;
 };
 
 export default withRouter(Chat);

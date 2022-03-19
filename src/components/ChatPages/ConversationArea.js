@@ -1,16 +1,16 @@
 const ConversationArea = (props) => {
-    let { myInfo, users } = props;
+    let { isMobile, myInfo, users } = props;
     // console.log("check props myInfo from ConversationArea: ", myInfo);
     // console.log("check props users from ConversationArea: ", users);
 
+    let classContainer = isMobile
+        ? "conversation-area-mobile"
+        : "conversation-area";
+
     return (
-        <div className="conversation-area">
+        <div className={classContainer}>
             <div className="msg online active">
-                <img
-                    className="msg-profile"
-                    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
-                    alt=""
-                />
+                <img className="msg-profile" src={myInfo.avatar} alt="" />
                 <div className="msg-detail">
                     <div className="msg-username">
                         {myInfo.displayName + "(Bạn)"}
@@ -24,11 +24,7 @@ const ConversationArea = (props) => {
             {users &&
                 users.map((user, index) => (
                     <div key={index} className="msg online">
-                        <img
-                            className="msg-profile"
-                            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
-                            alt=""
-                        />
+                        <img className="msg-profile" src={user.avatar} alt="" />
                         <div className="msg-detail">
                             <div className="msg-username">
                                 {user.displayName}
