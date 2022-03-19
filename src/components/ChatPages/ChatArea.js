@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import ShowInfo from "./ShowInfo";
 import ShowUserOnline from "./ShowUserOnline";
 import ConversationArea from "./ConversationArea";
+import axios from "axios";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
@@ -30,7 +31,7 @@ const ChatArea = (props) => {
         // real time
         socket.emit("send-message-to-room", {
             roomId: props.roomId,
-            senderName: "NT",
+            senderName: displayName,
             textMessage: textMessage,
             time: moment(new Date()).format("hh:mm A"),
         });
@@ -39,10 +40,41 @@ const ChatArea = (props) => {
     const handleSendLike = () => {
         socket.emit("send-message-to-room", {
             roomId: props.roomId,
-            senderName: "NT",
+            senderName: displayName,
             textMessage: '<i class="fas fa-thumbs-up"></i>',
             time: moment(new Date()).format("hh:mm A"),
         });
+    };
+
+    const handleOnChangeImage = (e) => {
+        let files = e.target.files;
+        console.log("handleOnChangeImage: ", files);
+
+        var formData = new FormData();
+        formData.append("image", files[0]);
+        axios
+            .post("https://api.imgur.com/3/image", formData, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "multipart/form-data",
+                    Authorization: "Client-ID 58f2ebf29687a0b",
+                },
+                responseType: "json",
+            })
+            .then((res) => {
+                console.log(res);
+                let link = res.data.data.link;
+
+                socket.emit("send-message-to-room", {
+                    roomId: props.roomId,
+                    senderName: displayName,
+                    textMessage: `<img src="${link}" />`,
+                    time: moment(new Date()).format("hh:mm A"),
+                });
+            })
+            .catch((e) => {
+                console.error(e);
+            });
     };
 
     const handleOnKeyDownSendMessage = (e) => {
@@ -52,23 +84,22 @@ const ChatArea = (props) => {
     };
 
     const handleChatRealtime = (roomId) => {
-        console.log("Check disname from realtime: ", displayName);
+        // console.log("Check disname from realtime: ", displayName);
         // TODO real time
         socket.emit("join-chat-room", { roomId, displayName });
 
         socket.on("join-chat-room-succeeded", (dataJoined) => {
-            console.log(dataJoined);
+            // console.log(dataJoined);
             let { message, joinedAt, users } = dataJoined;
             setJoinedAt(joinedAt);
-            setUsers(users.filter((user) => user.displayName !== displayName));
+            setUsers(users);
         });
 
         //* RECEIVE
         //* caller
         socket.on("send-message-caller-succeed", (dataMessage) => {
             let { textMessage, time } = dataMessage;
-            console.log("send-message-caller-succeed: ", listMessages);
-
+            // console.log("send-message-caller-succeed: ", listMessages);
             listMessages.push(
                 <ChatMessage
                     key={randomId(10)}
@@ -84,14 +115,9 @@ const ChatArea = (props) => {
 
         //* others
         socket.on("get-all-users", (dataUsers) => {
-            console.log("get-all-users: ", dataUsers);
-
-            dataUsers.map((item) => console.log(displayName, item.displayName));
-
+            // console.log("get-all-users: ", dataUsers);
             setTimeout(() => {
-                setUsers(
-                    dataUsers.filter((user) => user.displayName !== displayName)
-                );
+                setUsers(dataUsers);
             }, 2000);
         });
 
@@ -109,6 +135,7 @@ const ChatArea = (props) => {
                     key={randomId(10)}
                     textMessage={textMessage}
                     time={time}
+                    displayName={senderName}
                     isOwner={false}
                 />
             );
@@ -118,10 +145,8 @@ const ChatArea = (props) => {
     };
 
     const handleChangeDisplayName = (newDisName) => {
-        console.log("handleChangeDisplayName from ChatArea: ", newDisName);
-
+        // console.log("handleChangeDisplayName from ChatArea: ", newDisName);
         setDisplayName(newDisName);
-
         socket.emit("update-disname", {
             roomId: props.roomId,
             newDisName,
@@ -135,12 +160,17 @@ const ChatArea = (props) => {
     useEffect(() => {
         document.title = "Fast Chat - " + props.roomId;
         handleChatRealtime(props.roomId);
-    }, [props.roomId]);
 
-    // useEffect(() => {
-    //     console.log("set disname: ", displayName);
-    //     // handleChatRealtime(props.roomId);
-    // }, [displayName]);
+        //* re load users in room
+        setInterval(() => {
+            // console.log(">>>>>>>>> re load users");
+            socket.emit("re-load-users", props.roomId);
+        }, 30000);
+
+        return () => {
+            setUsers([]);
+        };
+    }, [props.roomId]);
 
     useEffect(() => {
         scrollToBottom();
@@ -178,8 +208,7 @@ const ChatArea = (props) => {
                             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%2812%29.png"
                             alt=""
                         />
-                        <span>+4</span>
-                        {/* <span>4</span> */}
+                        <span>{users.length}</span>
                     </div>
                 </div>
 
@@ -189,27 +218,37 @@ const ChatArea = (props) => {
                 </div>
                 {/* TODO FOOTER */}
                 <div className="chat-area-footer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="feather feather-image"
-                    >
-                        <rect
-                            x={3}
-                            y={3}
-                            width={18}
-                            height={18}
-                            rx={2}
-                            ry={2}
-                        />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <path d="M21 15l-5-5L5 21" />
-                    </svg>
+                    <label htmlFor="image">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-image"
+                        >
+                            <rect
+                                x={3}
+                                y={3}
+                                width={18}
+                                height={18}
+                                rx={2}
+                                ry={2}
+                            />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <path d="M21 15l-5-5L5 21" />
+                        </svg>
+                    </label>
+                    <input
+                        type={"file"}
+                        id={"image"}
+                        accept="image/*"
+                        onChange={(e) => handleOnChangeImage(e)}
+                        hidden
+                    />
+
                     <input
                         type="text"
                         value={textMessage}
@@ -218,6 +257,7 @@ const ChatArea = (props) => {
                         onKeyDown={(e) => handleOnKeyDownSendMessage(e)}
                         onChange={(e) => handleOnChangeTextMessage(e)}
                     />
+
                     {textMessage !== "" ? (
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

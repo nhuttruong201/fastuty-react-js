@@ -38,30 +38,31 @@ const ShowUserOnline = (props) => {
                         </div>
 
                         {users &&
-                            users.map((user, index) => {
-                                return (
-                                    <div key={index} className="msg online">
-                                        <img
-                                            className="msg-profile"
-                                            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
-                                            alt=""
-                                        />
-                                        <div className="msg-detail">
-                                            <div className="msg-username">
-                                                {user.displayName}
-                                            </div>
-                                            <div className="msg-content">
-                                                <span className="msg-message">
-                                                    Tham gia lúc
-                                                </span>
-                                                <span className="msg-date">
-                                                    {user.joinedAt}
-                                                </span>
+                            users.map(
+                                (user, index) =>
+                                    user.displayName !== myInfo.displayName && (
+                                        <div key={index} className="msg online">
+                                            <img
+                                                className="msg-profile"
+                                                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
+                                                alt=""
+                                            />
+                                            <div className="msg-detail">
+                                                <div className="msg-username">
+                                                    {user.displayName}
+                                                </div>
+                                                <div className="msg-content">
+                                                    <span className="msg-message">
+                                                        Tham gia lúc
+                                                    </span>
+                                                    <span className="msg-date">
+                                                        {user.joinedAt}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    )
+                            )}
                     </div>
                 </div>
             </div>

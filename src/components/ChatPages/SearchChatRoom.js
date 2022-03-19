@@ -19,7 +19,7 @@ const SearchChatRoom = (props) => {
     const handleJoinRoom = (e) => {
         e.preventDefault();
         if (roomId === "") {
-            setErrMsg("Bạn chưa nhập đủ thông tin!");
+            setErrMsg("Bạn chưa nhập mã phòng!");
             return;
         }
 

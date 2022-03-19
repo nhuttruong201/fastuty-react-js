@@ -11,7 +11,7 @@ import SearchNote from "./components/NotePages/SearchNote";
 import BackupPage from "./components/NotePages/BackupPage";
 
 import Chat from "./components/ChatPages/Chat";
-import SharePage from "./components/NotePages/Modals/SharePage";
+import SharePage from "./components/NotePages/SharePage";
 import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
 
 class App extends Component {

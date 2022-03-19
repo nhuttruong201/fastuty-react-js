@@ -4,6 +4,7 @@ import moment from "moment";
 const ShowInfo = (props) => {
     const [disName, setDisName] = useState("");
     const [message, setMessage] = useState("");
+    const [errMessage, setErrMessage] = useState("");
 
     const handleOnChangeDisName = (e) => {
         setDisName(e.target.value);
@@ -16,7 +17,13 @@ const ShowInfo = (props) => {
     };
 
     const handleUpdateDisplayName = () => {
+        if (disName === "") {
+            setMessage("");
+            setErrMessage("Tên không được để trống!");
+            return;
+        }
         props.setDisplayName(disName);
+        setErrMessage("");
         setMessage(
             "Cập nhật thành công! - " + moment(new Date()).format("hh:mm:ss A")
         );
@@ -24,7 +31,7 @@ const ShowInfo = (props) => {
 
     useEffect(() => {
         setDisName(props.displayName);
-    }, [props]);
+    }, []);
 
     return (
         <>
@@ -39,8 +46,11 @@ const ShowInfo = (props) => {
                 </div>
                 <div className="offcanvas-body">
                     {message && <p className="text-primary">{message}</p>}
+                    {errMessage && <p className="text-danger">{errMessage}</p>}
                     <div className="form-group">
-                        <label>Tên hiển thị trong nhóm chat</label>
+                        <label className="text-black-50">
+                            Tên hiển thị trong nhóm chat
+                        </label>
                         <input
                             className="form-control mt-2"
                             placeholder="nhập tên hiển thị..."
@@ -51,7 +61,7 @@ const ShowInfo = (props) => {
                     </div>
                     <div className="form-group mt-2 text-center">
                         <button
-                            className="btn btn-secondary"
+                            className="btn btn-primary"
                             type="button"
                             onClick={() => handleUpdateDisplayName()}
                         >

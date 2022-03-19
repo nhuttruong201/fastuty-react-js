@@ -1,7 +1,7 @@
 const ConversationArea = (props) => {
     let { myInfo, users } = props;
-    console.log("check props myInfo from ConversationArea: ", myInfo);
-    console.log("check props users from ConversationArea: ", users);
+    // console.log("check props myInfo from ConversationArea: ", myInfo);
+    // console.log("check props users from ConversationArea: ", users);
 
     return (
         <div className="conversation-area">
