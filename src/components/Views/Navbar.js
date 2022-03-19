@@ -10,7 +10,6 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-2">
             <Link to={"/"} className="navbar-brand p-0">
                 <h2 className="m-0 text-primary">
-                    {/* <i className="fa fa-tooth me-2" /> */}
                     <i className="fas fa-meteor"></i>
                     &nbsp;Fast<span className="text-secondary">Uty</span>
                 </h2>
@@ -24,11 +23,11 @@ function Navbar() {
                 <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
-                <div className="navbar-nav ms-auto py-0">
+                <div className="navbar-nav ms-auto py-1">
                     <NavLink
                         to="/"
                         exact={true}
-                        className="nav-item nav-link btn-to-top py-3"
+                        className="nav-item nav-link btn-to-top py-2"
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -36,7 +35,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/note"
-                        className="nav-item nav-link btn-to-top py-3"
+                        className="nav-item nav-link btn-to-top py-2"
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -44,7 +43,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/chat"
-                        className={"nav-item nav-link btn-to-top py-3"}
+                        className={"nav-item nav-link btn-to-top py-2"}
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >
@@ -52,7 +51,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         to="/image"
-                        className={"nav-item nav-link btn-to-top py-3"}
+                        className={"nav-item nav-link btn-to-top py-2"}
                         activeClassName="active"
                         onClick={handleScrollTop}
                     >

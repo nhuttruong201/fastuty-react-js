@@ -1,5 +1,5 @@
 const ChatMessage = (props) => {
-    let { time, textMessage, isOwner } = props;
+    let { time, textMessage, displayName, isOwner } = props;
     let classMessage = isOwner ? "chat-msg owner" : "chat-msg";
 
     return (
@@ -11,7 +11,10 @@ const ChatMessage = (props) => {
                         src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
                         alt=""
                     />
-                    <div className="chat-msg-date">{time}</div>
+                    <div className="chat-msg-date">
+                        {time}
+                        {displayName && ", " + displayName}
+                    </div>
                 </div>
                 <div className="chat-msg-content">
                     <div
