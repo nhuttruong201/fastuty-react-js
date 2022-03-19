@@ -796,3 +796,28 @@ html {
 h4 {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.avatar-current {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.avatar-current img {
+    width: 30%;
+    height: auto;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.avatar-current img:hover {
+}
+
+.elm-avatar img {
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.elm-avatar img:hover {
+    opacity: 0.7;
+}

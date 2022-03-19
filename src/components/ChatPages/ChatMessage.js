@@ -6,7 +6,9 @@ const ChatMessage = (props) => {
         <>
             <div className={classMessage}>
                 <div className="chat-msg-profile">
-                    <img className="chat-msg-img" src={avatar} alt="" />
+                    {!isOwner && (
+                        <img className="chat-msg-img" src={avatar} alt="" />
+                    )}
                     <div className="chat-msg-date">
                         {time}
                         {displayName && ", " + displayName}

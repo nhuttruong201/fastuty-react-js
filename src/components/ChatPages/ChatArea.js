@@ -138,14 +138,27 @@ const ChatArea = (props) => {
         });
     };
 
-    const handleChangeDisplayName = (newDisName) => {
-        // console.log("handleChangeDisplayName from ChatArea: ", newDisName);
-        socket.emit("update-disname", {
+    // const handleChangeDisplayName = (newDisName) => {
+    //     // console.log("handleChangeDisplayName from ChatArea: ", newDisName);
+    //     socket.emit("update-disname", {
+    //         roomId: props.roomId,
+    //         newDisName,
+    //     });
+
+    //     setDisplayName(newDisName);
+    // };
+
+    const handleChangeUserinfo = (newUserInfo) => {
+        let { userAvatar, userDisplayName } = newUserInfo;
+        console.log("check new info: ", newUserInfo);
+        socket.emit("update-user-info", {
             roomId: props.roomId,
-            newDisName,
+            userAvatar,
+            userDisplayName,
         });
 
-        setDisplayName(newDisName);
+        setDisplayName(userDisplayName);
+        setAvatar(userAvatar);
     };
 
     const scrollToBottom = () => {
@@ -191,8 +204,9 @@ const ChatArea = (props) => {
                     />
 
                     <ShowInfo
+                        currentAvatar={avatar}
                         displayName={displayName}
-                        setDisplayName={handleChangeDisplayName}
+                        changeUserInfo={handleChangeUserinfo}
                     />
 
                     <div className="chat-area">
