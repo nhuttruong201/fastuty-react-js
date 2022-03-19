@@ -1,6 +1,10 @@
 import ConversationArea from "./ConversationArea";
 
 const HeaderChat = () => {
+    const handleLeaveChatRoom = () => {
+        alert("leave chat room");
+    };
+
     return (
         <>
             <div className="header">
@@ -23,7 +27,7 @@ const HeaderChat = () => {
                     <i className="bi bi-camera-video"></i>
                 </div>
                 <div className="user-settings">
-                    <div className="dark-light">
+                    {/* <div className="dark-light">
                         <svg
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -34,7 +38,7 @@ const HeaderChat = () => {
                         >
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                         </svg>
-                    </div>
+                    </div> */}
 
                     <div className="settings">
                         <svg
@@ -44,6 +48,7 @@ const HeaderChat = () => {
                             fill="currentColor"
                             className="bi bi-box-arrow-right"
                             viewBox="0 0 16 16"
+                            onClick={() => handleLeaveChatRoom()}
                         >
                             <path
                                 fillRule="evenodd"
