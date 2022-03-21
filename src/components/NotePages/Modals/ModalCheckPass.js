@@ -11,6 +11,7 @@ import {
 
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import ShowNoti from "../../Notis/ShowNoti";
 
 class ModalCheckPass extends React.Component {
     constructor(props) {
@@ -96,12 +97,7 @@ class ModalCheckPass extends React.Component {
                                 autoFocus
                             />
                         </div>
-                        {errMsg ? (
-                            <Alert color="danger mt-2">
-                                <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                {errMsg}
-                            </Alert>
-                        ) : null}
+                        {errMsg && <ShowNoti isError={true} message={errMsg} />}
                     </ModalBody>
                     <ModalFooter>
                         <Button

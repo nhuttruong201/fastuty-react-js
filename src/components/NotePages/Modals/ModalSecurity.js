@@ -1,15 +1,9 @@
 import React from "react";
-import {
-    Alert,
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-} from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import ShowNoti from "../../Notis/ShowNoti";
 
 class ModalSecurity extends React.Component {
     state = {
@@ -113,9 +107,7 @@ class ModalSecurity extends React.Component {
         return (
             <div>
                 <Modal isOpen={isShow} centered={true}>
-                    <ModalHeader
-                    // toggle={function noRefCheck() {}}
-                    >
+                    <ModalHeader>
                         <i className="fas fa-lock"></i> Bảo mật ghi chú
                     </ModalHeader>
                     <ModalBody className="p-4">
@@ -123,15 +115,10 @@ class ModalSecurity extends React.Component {
                             className="text-black-80"
                             style={{ fontSize: "15px" }}
                         >
-                            <p className="text-justify">
-                                <i className="bi bi-info-circle text-info"></i>
-                                &nbsp; Khi đặt mật khẩu, bạn cần xác thực trước
-                                khi đi đến ghi chú.
-                            </p>
-                            <p className="text-justify">
-                                <i className="bi bi-info-circle text-info"></i>
-                                &nbsp; Bảo mật sẽ có hiệu lực từ lần truy cập
-                                tiếp theo.
+                            <p className="text-justify text-center">
+                                Khi đặt mật khẩu, bạn cần xác thực trước khi đi
+                                đến ghi chú. Thay đổi sẽ có hiệu lực từ lần truy
+                                cập tiếp theo.
                             </p>
                         </div>
                         <div className="mid">
@@ -167,17 +154,8 @@ class ModalSecurity extends React.Component {
                             </div>
                         )}
 
-                        {errMsg ? (
-                            <Alert color="danger mt-2">
-                                <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                {errMsg}
-                            </Alert>
-                        ) : null}
-                        {okMsg ? (
-                            <Alert color="success mt-2">
-                                <i className="bi bi-check2-circle"></i> {okMsg}
-                            </Alert>
-                        ) : null}
+                        {errMsg && <ShowNoti isError={true} message={errMsg} />}
+                        {okMsg && <ShowNoti isError={false} message={okMsg} />}
                     </ModalBody>
                     <ModalFooter>
                         <Button
@@ -185,7 +163,7 @@ class ModalSecurity extends React.Component {
                             color="primary"
                             onClick={() => this.handleUpdatePassword()}
                         >
-                            Cập nhật
+                            <i className="bi bi-gear"></i> Cập nhật
                         </Button>{" "}
                         <Button
                             className="btn-sm"

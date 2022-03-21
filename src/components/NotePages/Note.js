@@ -39,14 +39,12 @@ class Note extends React.Component {
     }
 
     onFocus = () => {
-        console.log("onFocus");
         this.setState({
             focus: true,
         });
     };
 
     onBlur = () => {
-        console.log("onBlur");
         this.setState({
             focus: false,
         });
@@ -68,7 +66,7 @@ class Note extends React.Component {
                 content: value,
             })
             .then((res) => {
-                // console.log(response);
+                // console.log(res);
                 socket.emit("update-note", {
                     code: this.props.match.params.code,
                     password: this.state.password,
@@ -114,28 +112,24 @@ class Note extends React.Component {
     };
 
     fetchData = async (code) => {
-        // console.log("fetchData: ", code);
-        document.title = `Fast Note - ${code}`;
-
         let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
-        let note = res.data.data;
-
-        // console.log(note);
-
-        this.setState({
-            code: note.code,
-            password: note.password,
-            isShared: note.isShared,
-            isConfirmedPassword: note.password === "" ? true : false,
-        });
-
-        if (note.password !== "") {
-            console.log("Note Is Private !!");
+        // console.log(">>> res from fetchData: ", res);
+        if (res.data.isPrivate) {
+            // console.log("note is private!!!");
+            this.setState({
+                isLoading: false,
+                isConfirmedPassword: false,
+            });
             return;
         }
 
+        let note = res.data.data;
+
         this.setState({
             isLoading: false,
+            code: note.code,
+            password: note.password,
+            isShared: note.isShared,
             content: note.content,
             updatedAt: moment(note.updatedAt).format("DD/MM/YYYY hh:mm:ss A"),
             isConfirmedPassword: true,
@@ -152,7 +146,7 @@ class Note extends React.Component {
 
         //* RECEIVE
         socket.on("connect", () => {
-            console.log(">>>>>>>> check realtime: ", socket.id);
+            console.log(">>>>>>>> check socketId realtime: ", socket.id);
         });
 
         //* caller
@@ -168,10 +162,7 @@ class Note extends React.Component {
 
         //* others
         socket.on("update-note-other-succeed", (dataUpdate) => {
-            console.log(dataUpdate);
             let { socketId, content, updatedAt } = dataUpdate;
-            console.log("ID tao: ", socket.id, "ID mầy: ", socketId);
-
             this.bodyInput.current.blur();
 
             if (!this.state.focus) {
@@ -184,7 +175,7 @@ class Note extends React.Component {
     };
 
     handleUpdateShareState = (isShared) => {
-        console.log("Check share state from Note.jsL: ", isShared);
+        // console.log("Check share state from Note.jsL: ", isShared);
         this.setState({
             isShared,
         });
@@ -192,7 +183,7 @@ class Note extends React.Component {
 
     async componentDidMount() {
         let code = this.props.match.params.code;
-
+        document.title = `Fast Note - ${code}`;
         await this.fetchData(code);
         // this.state.focus
         //     ? this.bodyInput.current.focus()
@@ -215,30 +206,32 @@ class Note extends React.Component {
         // console.log("check props redux: ", this.props.dataRedux);
 
         return (
-            <div
-                className="container-fluid p-0 main-container-note"
-                style={{ overflow: "hidden" }}
-            >
-                <div className="row justify-content-center h-100">
-                    <div className="col-md-12 col-lg-10 h-100 py-3">
-                        <div className="editor">
-                            {!isConfirmedPassword ? (
-                                <>
-                                    <ModalCheckPass
-                                        confirmedPassword={
-                                            this.handleConfirmedPassword
-                                        }
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <div className="mb-2 px-2">
-                                        {isLoading ? (
-                                            <span className="text-black-50">
-                                                Đang tải dữ liệu...
-                                            </span>
-                                        ) : (
-                                            <>
+            <>
+                {isLoading ? (
+                    <div className="center">
+                        <p className="text-center text-primary">
+                            Đang tải dữ liệu...
+                        </p>
+                    </div>
+                ) : (
+                    <div
+                        className="container-fluid p-0 main-container-note"
+                        style={{ overflow: "hidden" }}
+                    >
+                        <div className="row justify-content-center h-100">
+                            <div className="col-md-12 col-lg-10 h-100 py-3">
+                                <div className="editor">
+                                    {!isConfirmedPassword ? (
+                                        <>
+                                            <ModalCheckPass
+                                                confirmedPassword={
+                                                    this.handleConfirmedPassword
+                                                }
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="mb-2 px-2">
                                                 <span className="code-note text-black-50">
                                                     <i className="bi bi-pencil-fill"></i>
                                                     {" " + code + " "}
@@ -257,36 +250,40 @@ class Note extends React.Component {
                                                         </>
                                                     )}
                                                 </span>
-                                            </>
-                                        )}
-                                    </div>
+                                            </div>
 
-                                    <ReactQuill
-                                        theme="snow"
-                                        modules={this.modules}
-                                        placeholder="ghi chú..."
-                                        value={content}
-                                        onChange={this.handleChangeContent}
-                                        onFocus={this.onFocus}
-                                        onBlur={this.onBlur}
-                                        ref={this.bodyInput}
-                                    ></ReactQuill>
+                                            <ReactQuill
+                                                theme="snow"
+                                                modules={this.modules}
+                                                placeholder="ghi chú..."
+                                                value={content}
+                                                onChange={
+                                                    this.handleChangeContent
+                                                }
+                                                onFocus={this.onFocus}
+                                                onBlur={this.onBlur}
+                                                ref={this.bodyInput}
+                                            ></ReactQuill>
 
-                                    <NoteController
-                                        password={password}
-                                        code={code}
-                                        isShared={isShared}
-                                        updateShareState={
-                                            this.handleUpdateShareState
-                                        }
-                                        submitCode={this.handleSubmitCode}
-                                    />
-                                </>
-                            )}
+                                            <NoteController
+                                                password={password}
+                                                code={code}
+                                                isShared={isShared}
+                                                updateShareState={
+                                                    this.handleUpdateShareState
+                                                }
+                                                submitCode={
+                                                    this.handleSubmitCode
+                                                }
+                                            />
+                                        </>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                )}
+            </>
         );
     }
 

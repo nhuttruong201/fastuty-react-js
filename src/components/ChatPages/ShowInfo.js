@@ -46,10 +46,10 @@ const ShowInfo = (props) => {
                         )}
                         <div className="form-group text-center">
                             <label className="text-black-50">
-                                Tên hiển thị của bạn
+                                Tên hiển thị
                             </label>
                             <input
-                                className="form-control mt-2 text-center"
+                                className="form-control mt-1 text-center"
                                 placeholder="nhập tên hiển thị..."
                                 value={userDisplayName}
                                 onChange={(e) => handleOnChangeDisName(e)}
@@ -57,7 +57,7 @@ const ShowInfo = (props) => {
                         </div>
                     </div>
 
-                    <div className="mt-3">
+                    <div className="mt-2">
                         <div className="avatar-current">
                             <img
                                 src={userAvatar}
@@ -65,11 +65,11 @@ const ShowInfo = (props) => {
                                 className="rounded-circle"
                             />
                             <p className="text-center text-black-50">
-                                avatar của bạn
+                                Ảnh đại diện
                             </p>
                         </div>
                         <div className="container">
-                            <div className="row">
+                            <div className="row justify-content-center">
                                 {Array.from(getAllAvatar()).map(
                                     (avt, index) => {
                                         return (
@@ -93,10 +93,9 @@ const ShowInfo = (props) => {
                                 )}
                             </div>
                         </div>
-                        <div className="d-grid">
+                        <div className="text-center">
                             <button
-                                className="btn btn-secondary btn-block mt-4"
-                                type="button"
+                                className="btn btn-primary mt-3"
                                 onClick={() => handleUpdateUserInfo()}
                             >
                                 Cập nhật thông tin

@@ -1,14 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import DialogConfirm from "./DialogConfirm";
 
 const HeaderChat = (props) => {
-    let { avatar } = props;
+    let { avatar, roomId, leaveRoom } = props;
+
+    const [showConfirmLeaveRoom, setShowConfirmLeaveRoom] = useState(false);
 
     const handleLeaveChatRoom = () => {
-        alert("leave chat room");
+        // alert("leave chat room");
+        setShowConfirmLeaveRoom(true);
     };
+
+    const handleCancelLeaveRoom = () => {
+        setShowConfirmLeaveRoom(false);
+    };
+
+    const handleConfirmLeaveRoom = () => {
+        leaveRoom();
+        setShowConfirmLeaveRoom(false);
+    };
+
+    useEffect(() => {
+        return () => {
+            setShowConfirmLeaveRoom(false);
+        };
+    }, []);
 
     return (
         <>
+            {showConfirmLeaveRoom && (
+                <DialogConfirm
+                    title={`Rời khỏi phòng ${roomId}?`}
+                    // content={"Bạn có chắc rời khỏi phòng?"}
+                    cancel={handleCancelLeaveRoom}
+                    confirm={handleConfirmLeaveRoom}
+                />
+            )}
+
             <div className="header">
                 <div className="logo">
                     <svg
@@ -29,19 +57,6 @@ const HeaderChat = (props) => {
                     <i className="bi bi-camera-video"></i>
                 </div>
                 <div className="user-settings">
-                    {/* <div className="dark-light">
-                        <svg
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-                        </svg>
-                    </div> */}
-
                     <div className="settings">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +95,6 @@ const HeaderChat = (props) => {
 
                     <img
                         className="user-profile"
-                        // src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png"
                         src={avatar}
                         alt=""
                         data-bs-toggle="offcanvas"

@@ -806,11 +806,6 @@ h4 {
 .avatar-current img {
     width: 30%;
     height: auto;
-    transition: 1s;
-    cursor: pointer;
-}
-
-.avatar-current img:hover {
 }
 
 .elm-avatar img {
