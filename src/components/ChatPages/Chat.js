@@ -162,13 +162,14 @@ const Chat = (props) => {
         document.title = `Fast Chat - ${roomId}`;
         handleChatRealtime(roomId);
         //* re load users in room
-        setInterval(() => {
+        const reLoadUsers = setInterval(() => {
             socket.emit("re-load-users", roomId);
         }, 15000);
 
         return () => {
             setUsers([]);
             setListMessages([]);
+            clearInterval(reLoadUsers);
             socket.emit("leave-chat-room", roomId);
         };
     }, []);
