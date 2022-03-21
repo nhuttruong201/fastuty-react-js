@@ -54,12 +54,9 @@ class SearchNote extends React.Component {
                             </h4>
                             <form>
                                 <div className="form-group mt-4">
-                                    {errMsg ? (
-                                        <p className="text-danger">
-                                            <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                            {errMsg}
-                                        </p>
-                                    ) : null}
+                                    {errMsg && (
+                                        <p className="text-danger">{errMsg}</p>
+                                    )}
                                     <input
                                         type={"text"}
                                         value={this.state.code}

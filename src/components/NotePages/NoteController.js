@@ -21,8 +21,7 @@ class NoteController extends React.Component {
     }
 
     openModal = (modalName) => {
-        console.log("Open " + modalName);
-
+        // console.log("Open " + modalName);
         if (modalName === "share") {
             this.setState({
                 showModalShare: true,
@@ -46,8 +45,7 @@ class NoteController extends React.Component {
     };
 
     closeModal = (modalName) => {
-        console.log("handleCloseModal: ", modalName);
-
+        // console.log("handleCloseModal: ", modalName);
         if (modalName === "share") {
             this.setState({
                 showModalShare: false,
@@ -104,7 +102,7 @@ class NoteController extends React.Component {
         let { showModalBackup, showModalSecurity, showModalShare } = this.state;
         let { password, inputCode, isShared } = this.state;
 
-        console.log("Check isShared from controller: ", isShared);
+        // console.log("Check isShared from controller: ", isShared);
 
         return (
             <>
@@ -124,7 +122,7 @@ class NoteController extends React.Component {
                                     className="btn btn-primary border-radius-top-right border-radius-bottom-right"
                                     onClick={this.handleSubmitCode}
                                 >
-                                    <i className="bi bi-search"></i> Tìm
+                                    <i className="bi bi-search"></i>
                                 </button>
                             </div>
                             <div className="pt-2 text-center">

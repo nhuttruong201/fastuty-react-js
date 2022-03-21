@@ -65,6 +65,14 @@ input[type="number"]:focus,
     justify-content: center;
     padding-top: 1em;
 }
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 :root {
     --primary: #06a3da;
     --secondary: #f57e57;
@@ -167,7 +175,7 @@ h6,
 }
 
 .navbar-light .navbar-nav .nav-link {
-    font-family: "Jost", sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     padding: 35px 15px;
     font-size: 18px;
     color: var(--dark);
@@ -393,22 +401,22 @@ h6,
 }
 
 .border-radius-full {
-    border-radius: 15px !important;
+    border-radius: 8px !important;
 }
 
 .border-radius-top-left {
-    border-top-left-radius: 15px !important;
+    border-top-left-radius: 8px !important;
 }
 
 .border-radius-top-right {
-    border-top-right-radius: 15px !important;
+    border-top-right-radius: 8px !important;
 }
 
 .border-radius-bottom-left {
-    border-bottom-left-radius: 15px !important;
+    border-bottom-left-radius: 8px !important;
 }
 .border-radius-bottom-right {
-    border-bottom-right-radius: 15px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 td {
@@ -454,4 +462,8 @@ td {
 
 button:focus {
     box-shadow: none !important;
+}
+
+.modal-title {
+    font-family: Arial, Helvetica, sans-serif !important;
 }

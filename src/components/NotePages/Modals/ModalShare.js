@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import ShowNoti from "../../Notis/ShowNoti";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 class ModalShare extends React.Component {
@@ -18,10 +19,6 @@ class ModalShare extends React.Component {
         let isChecked = e.target.checked;
         console.log("handleChangeStateShare: ", isChecked);
 
-        // this.setState({
-        //     isOnPassword: isChecked,
-        //     password: isChecked ? this.state.password : "",
-        // });
         await axios
             .put(API_ENDPOINT + "/api/note/update-share-state", {
                 code: this.props.code,
@@ -83,10 +80,9 @@ class ModalShare extends React.Component {
                             className="text-black-80"
                             style={{ fontSize: "15px" }}
                         >
-                            <p className="text-justify text-black-80">
-                                <i className="bi bi-info-circle text-info"></i>{" "}
-                                Chế độ chia sẻ cho phép{" "}
-                                <strong>bất kỳ ai </strong>
+                            <p className="text-justify text-center text-black-80">
+                                Chế độ chia sẻ cho phép
+                                <strong> bất kỳ ai </strong>
                                 có kết nối internet và truy cập vào{" "}
                                 <strong>liên kết chia sẻ </strong>
                                 đều có thể xem nội dung.
@@ -109,17 +105,8 @@ class ModalShare extends React.Component {
                             </div>
                         </div>
 
-                        {errMsg && (
-                            <Alert color="danger mt-2">
-                                <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                {errMsg}
-                            </Alert>
-                        )}
-                        {okMsg && (
-                            <Alert color="success mt-2">
-                                <i className="bi bi-check2-circle"></i> {okMsg}
-                            </Alert>
-                        )}
+                        {errMsg && <ShowNoti isError={true} message={errMsg} />}
+                        {okMsg && <ShowNoti isError={false} message={okMsg} />}
                     </ModalBody>
                     <ModalFooter>
                         <button

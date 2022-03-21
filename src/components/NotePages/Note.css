@@ -1,14 +1,14 @@
 .ql-container {
     font-size: 15px !important;
     /* position: static !important; */
-    border-bottom-left-radius: 15px !important;
-    border-bottom-right-radius: 15px !important;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 .ql-toolbar {
     text-align: center !important;
-    border-top-left-radius: 15px !important;
-    border-top-right-radius: 15px !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
 }
 
 .ql-snow {
@@ -36,4 +36,5 @@
 }
 .code-note {
     font-weight: 600;
+    color: #62738d !important;
 }

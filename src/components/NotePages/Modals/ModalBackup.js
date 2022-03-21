@@ -11,6 +11,7 @@ import {
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ShowNoti from "../../Notis/ShowNoti";
 
 class ModalBackup extends React.Component {
     constructor() {
@@ -91,16 +92,10 @@ class ModalBackup extends React.Component {
                             className="text-black-80"
                             style={{ fontSize: "15px" }}
                         >
-                            <p className="text-justify">
-                                <i className="bi bi-info-circle text-info"></i>
-                                &nbsp; Sao lưu giúp lưu trữ lại nội dung ghi chú
-                                an toàn, phòng khi bạn vô tình xóa mất nội dung
+                            <p className="text-justify text-center">
+                                Sao lưu giúp lưu trữ lại nội dung ghi chú an
+                                toàn, phòng khi bạn vô tình xóa mất nội dung
                                 quan trọng.
-                            </p>
-                            <p className="text-justify">
-                                <i className="bi bi-info-circle text-info"></i>
-                                &nbsp; Hãy đặt commit để phân biệt các phiên lưu
-                                trữ.
                             </p>
                         </div>
 
@@ -111,26 +106,17 @@ class ModalBackup extends React.Component {
                             <input
                                 type={"text"}
                                 value={commit}
-                                placeholder={"nhập commit"}
+                                placeholder={"nhập commit..."}
                                 maxLength={255}
-                                className="form-control mt-2"
+                                className="form-control"
                                 onKeyDown={(e) => this.handleKeyDown(e)}
                                 onChange={(e) => this.handleOnChangeCommit(e)}
                                 autoFocus
                             />
                         </div>
 
-                        {errMsg ? (
-                            <Alert color="danger mt-2">
-                                <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                {errMsg}
-                            </Alert>
-                        ) : null}
-                        {okMsg ? (
-                            <Alert color="success mt-2">
-                                <i className="bi bi-check2-circle"></i> {okMsg}
-                            </Alert>
-                        ) : null}
+                        {errMsg && <ShowNoti isError={true} message={errMsg} />}
+                        {okMsg && <ShowNoti isError={false} message={okMsg} />}
                     </ModalBody>
                     <ModalFooter className="justify-content-between">
                         <div className="float-left">
