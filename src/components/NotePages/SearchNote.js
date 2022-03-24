@@ -8,8 +8,6 @@ class SearchNote extends React.Component {
             code: "",
             errMsg: null,
         };
-
-        this.txtPassword = React.createRef();
     }
 
     handleChangeCode = (e) => {
@@ -37,7 +35,6 @@ class SearchNote extends React.Component {
 
     componentDidMount = () => {
         document.title = "Fast Note";
-        this.txtPassword.current.focus();
     };
 
     render() {
@@ -47,11 +44,14 @@ class SearchNote extends React.Component {
             <div className="container-fluid">
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-sm-10 col-12">
-                        <div className="mx-auto mt-4 px-4 py-5 bg-white">
-                            <h4 className="text-black-50">
+                        <div className="mx-auto mt-4 px-4 py-5 bg-white rounded border">
+                            {/* <h4 className="text-black-50">
                                 <span className="text-primary">Fast</span>
                                 <span className="text-secondary">Note</span>
-                            </h4>
+                            </h4> */}
+                            <h5 className="position-relative d-inline-block text-primary text-uppercase">
+                                fastnote
+                            </h5>
                             <form>
                                 <div className="form-group mt-4">
                                     {errMsg && (
@@ -60,9 +60,9 @@ class SearchNote extends React.Component {
                                     <input
                                         type={"text"}
                                         value={this.state.code}
+                                        autoFocus
                                         placeholder="nhập mã ghí chú..."
                                         className="form-control text-center"
-                                        ref={this.txtPassword}
                                         onChange={(e) =>
                                             this.handleChangeCode(e)
                                         }
@@ -70,22 +70,22 @@ class SearchNote extends React.Component {
                                 </div>
                                 <div className="form-group mt-3 text-center">
                                     <button
-                                        className="btn btn-primary btn-sm mx-1"
+                                        className="btn btn-primary m-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "edit")
                                         }
                                     >
-                                        <i className="bi bi-journals"></i> Đi
-                                        đến ghi chú
+                                        <i className="bi bi-journals"></i> Ghi
+                                        chú
                                     </button>
                                     <button
-                                        className="btn btn-primary btn-sm mx-1"
+                                        className="btn btn-primary m-1"
                                         onClick={(e) =>
                                             this.handleSubmitCode(e, "backup")
                                         }
                                     >
                                         <i className="bi bi-cloud-arrow-up-fill"></i>{" "}
-                                        Đi đến lưu trữ
+                                        Lưu trữ
                                     </button>
                                 </div>
                             </form>

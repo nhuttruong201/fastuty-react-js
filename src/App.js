@@ -1,10 +1,8 @@
 import "./App.css";
 import { Component } from "react";
-
-import TopBar from "./components/Views/TopBar";
-import Navbar from "./components/Views/Navbar";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Navbar from "./components/Views/Navbar";
 import Home from "./components/Views/Home";
 import Note from "./components/NotePages/Note";
 import SearchNote from "./components/NotePages/SearchNote";
@@ -18,9 +16,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                {/* <TopBar /> */}
                 <Navbar clickToNote={this.handlePageNote} />
-
                 <Switch>
                     <Route path="/" exact>
                         <Home />
@@ -47,8 +43,6 @@ class App extends Component {
                         <h1>Fast image</h1>
                     </Route>
                 </Switch>
-
-                {/* <Footer /> */}
             </Router>
         );
     }
