@@ -1,13 +1,5 @@
 import React from "react";
-import {
-    Alert,
-    Button,
-    Input,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-} from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 import { withRouter } from "react-router-dom";
 import axios from "axios";
@@ -37,6 +29,10 @@ class ModalCheckPass extends React.Component {
     };
 
     handleConfirmPassword = async () => {
+        this.setState({
+            errMsg: null,
+        });
+
         let code = this.props.match.params.code;
         let { password } = this.state;
 

@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import axios from "../../configs/axios";
 import React from "react";
 
 import ReactQuill from "react-quill"; // ES6
@@ -10,7 +11,6 @@ import "./Note.css";
 
 import ModalCheckPass from "./Modals/ModalCheckPass";
 import NoteController from "./NoteController";
-import { connect } from "react-redux";
 import io from "socket.io-client";
 import moment from "moment";
 
@@ -60,7 +60,7 @@ class Note extends React.Component {
         }
 
         axios
-            .put(`${API_ENDPOINT}/api/note/update-content`, {
+            .put(`/api/note/update-content`, {
                 code: this.props.match.params.code,
                 password: this.state.password,
                 content: value,
@@ -112,7 +112,7 @@ class Note extends React.Component {
     };
 
     fetchData = async (code) => {
-        let res = await axios.get(`${API_ENDPOINT}/api/note/${code}`);
+        let res = await axios.get(`/api/note/${code}`);
         // console.log(">>> res from fetchData: ", res);
         if (res.data.isPrivate) {
             // console.log("note is private!!!");
@@ -188,6 +188,12 @@ class Note extends React.Component {
         // this.state.focus
         //     ? this.bodyInput.current.focus()
         //     : this.bodyInput.current.blur();
+    }
+
+    componentWillUnmount() {
+        // alert("leave note");
+        let code = this.props.match.params.code;
+        socket.emit("leave-chat-room", code);
     }
 
     render() {
@@ -350,10 +356,4 @@ class Note extends React.Component {
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
-        dataRedux: state.users,
-    };
-};
-
-export default connect(mapStateToProps)(withRouter(Note));
+export default withRouter(Note);

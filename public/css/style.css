@@ -175,7 +175,8 @@ h6,
 }
 
 .navbar-light .navbar-nav .nav-link {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: "Jost", sans-serif;
     padding: 35px 15px;
     font-size: 18px;
     color: var(--dark);

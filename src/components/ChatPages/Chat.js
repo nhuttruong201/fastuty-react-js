@@ -43,8 +43,7 @@ const Chat = (props) => {
 
     const handleOnChangeImage = (e) => {
         let files = e.target.files;
-        console.log("handleOnChangeImage: ", files);
-
+        // console.log("handleOnChangeImage: ", files);
         var formData = new FormData();
         formData.append("image", files[0]);
         axios
@@ -138,7 +137,7 @@ const Chat = (props) => {
 
     const handleChangeUserInfo = (newUserInfo) => {
         let { userAvatar, userDisplayName } = newUserInfo;
-        console.log("check new info: ", newUserInfo);
+        // console.log("check new info: ", newUserInfo);
         socket.emit("update-user-info", {
             roomId: roomId,
             userAvatar,
