@@ -17,12 +17,16 @@ const ShowInfo = (props) => {
     };
 
     const handleUpdateUserInfo = () => {
-        console.log("handleUpdateUserInfo: ", userAvatar, userDisplayName);
+        // console.log("handleUpdateUserInfo: ", userAvatar, userDisplayName);
         props.changeUserInfo({ userAvatar, userDisplayName });
         setErrMessage("");
         setOkMessage(
             "Cập nhật thành công! - " + moment(new Date()).format("hh:mm:ss A")
         );
+
+        setTimeout(() => {
+            setOkMessage("");
+        }, 3000);
     };
 
     return (

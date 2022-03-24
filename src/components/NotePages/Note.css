@@ -38,3 +38,7 @@
     font-weight: 600;
     color: #62738d !important;
 }
+
+.backup-container {
+    height: calc(100% - 70px);
+}

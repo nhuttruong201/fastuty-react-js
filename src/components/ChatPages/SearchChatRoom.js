@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import randomId from "../../services/randomId";
 
 const SearchChatRoom = (props) => {
     const [errMsg, setErrMsg] = useState(null);
     const [roomId, setRoomId] = useState("");
+    const history = useHistory();
 
     const handleChangeRoomId = (e) => {
         setRoomId(e.target.value);
@@ -23,7 +25,7 @@ const SearchChatRoom = (props) => {
             return;
         }
 
-        props.history.push("/chat/" + roomId);
+        history.push("/chat/" + roomId);
     };
 
     useEffect(() => {
@@ -35,21 +37,14 @@ const SearchChatRoom = (props) => {
             <div className="row justify-content-center">
                 <div className="col-md-5 col-sm-10 col-12">
                     <div className="mx-auto mt-4 px-4 py-5 bg-white rounded border">
-                        {/* <h4 className="text-black-50">
-                            <span className="text-primary">Fast</span>
-                            <span className="text-secondary">Chat</span>
-                        </h4> */}
                         <h5 className="position-relative d-inline-block text-primary text-uppercase">
                             fastchat
                         </h5>
                         <form>
                             <div className="form-group mt-4">
-                                {errMsg ? (
-                                    <p className="text-danger">
-                                        <i className="bi bi-exclamation-diamond-fill"></i>{" "}
-                                        {errMsg}
-                                    </p>
-                                ) : null}
+                                {errMsg && (
+                                    <p className="text-danger">{errMsg}</p>
+                                )}
                                 <input
                                     type={"text"}
                                     value={roomId}

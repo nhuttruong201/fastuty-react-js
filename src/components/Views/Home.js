@@ -15,11 +15,10 @@ class Home extends React.Component {
                         <div className="col-lg-7">
                             <div className="section-title mb-4">
                                 <h5 className="position-relative d-inline-block text-primary text-uppercase">
-                                    Giới thiệu
+                                    Về Fast Uty
                                 </h5>
                                 <h1 className="display-5 mb-0">
-                                    The World's Best Dental Clinic That You Can
-                                    Trust
+                                    Tiện ích nhanh cho bạn
                                 </h1>
                             </div>
                             <h4 className="text-body fst-italic mb-4">
@@ -62,13 +61,6 @@ class Home extends React.Component {
                                     </h5>
                                 </div>
                             </div>
-                            {/* <a
-                                href="appointment.html"
-                                className="btn btn-primary py-3 px-5 mt-4 wow zoomIn"
-                                data-wow-delay="0.6s"
-                            >
-                                Make Appointment
-                            </a> */}
                         </div>
                         <div
                             className="col-lg-5"
@@ -78,7 +70,7 @@ class Home extends React.Component {
                                 <img
                                     className="position-absolute w-100 h-100 rounded wow zoomIn"
                                     data-wow-delay="0.9s"
-                                    src="https://vnn-imgs-a1.vgcloud.vn/cdn.24h.com.vn/upload/3-2019/images/2019-09-22/1569088344-560-1-1569052420-width650height813.jpg"
+                                    src="/img/bg.jpg"
                                     alt=""
                                     style={{ objectFit: "cover" }}
                                 />

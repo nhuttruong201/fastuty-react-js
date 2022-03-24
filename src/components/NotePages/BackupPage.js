@@ -110,8 +110,8 @@ class BackupPage extends React.Component {
         let { code } = this.props.match.params;
 
         return (
-            <div className="container mt-3 py-3 px-4 bg-white h-75">
-                <h4 style={{ color: "#34568b" }}>Kho lưu trữ</h4>
+            <div className="container backup-container py-3 px-4 bg-white border rounded">
+                <h4 style={{ color: "#34568b" }}>Kho lưu trữ ghi chú</h4>
                 <p>
                     Hiện có{" "}
                     <strong className="text-primary">{data.length}</strong>{" "}

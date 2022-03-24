@@ -15,6 +15,7 @@ import ConversationArea from "./ConversationArea";
 import randomAvatar from "../../services/randomAvatar";
 import HeaderChat from "./HeaderChat";
 import { Prompt } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const serverHost = API_ENDPOINT;
@@ -30,6 +31,7 @@ const Chat = (props) => {
     const messagesEndRef = useRef(null);
 
     const { roomId } = useParams();
+    const history = useHistory();
 
     const handleOnChangeTextMessage = (e) => {
         setTextMessage(e.target.value);
@@ -150,7 +152,7 @@ const Chat = (props) => {
 
     const handleLeaveRoom = () => {
         socket.emit("leave-chat-room", roomId);
-        props.history.push("/chat");
+        history.push("/chat");
     };
 
     const scrollToBottom = () => {

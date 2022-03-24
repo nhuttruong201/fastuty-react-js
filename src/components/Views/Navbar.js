@@ -14,7 +14,7 @@ function Navbar() {
                 </h2>
             </Link>
             <button
-                className="navbar-toggler"
+                className="navbar-toggler py-2"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse"

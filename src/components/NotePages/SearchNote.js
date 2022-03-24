@@ -45,10 +45,6 @@ class SearchNote extends React.Component {
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-sm-10 col-12">
                         <div className="mx-auto mt-4 px-4 py-5 bg-white rounded border">
-                            {/* <h4 className="text-black-50">
-                                <span className="text-primary">Fast</span>
-                                <span className="text-secondary">Note</span>
-                            </h4> */}
                             <h5 className="position-relative d-inline-block text-primary text-uppercase">
                                 fastnote
                             </h5>

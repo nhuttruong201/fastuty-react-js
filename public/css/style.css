@@ -445,10 +445,6 @@ td {
     height: calc(100% - 100px);
 }
 
-.main-container-chat {
-    height: calc(100% - 160px);
-}
-
 .btn {
     border-radius: 4px;
     margin: 1px 3px;
