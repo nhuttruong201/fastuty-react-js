@@ -17,22 +17,15 @@ class Home extends React.Component {
                                 <h5 className="position-relative d-inline-block text-primary text-uppercase">
                                     Về Fast Uty
                                 </h5>
-                                <h1 className="display-5 mb-0">
+                                <h1 className="display-5 mb-0 ">
                                     Tiện ích nhanh cho bạn
                                 </h1>
                             </div>
-                            <h4 className="text-body fst-italic mb-4">
-                                Diam dolor diam ipsum sit. Clita erat ipsum et
-                                lorem stet no lorem sit clita duo justo magna
-                                dolore
-                            </h4>
-                            <p className="mb-4">
-                                Tempor erat elitr rebum at clita. Diam dolor
-                                diam ipsum et tempor sit. Aliqu diam amet diam
-                                et eos labore. Clita erat ipsum et lorem et sit,
-                                sed stet no labore lorem sit. Sanctus clita duo
-                                justo et tempor eirmod magna dolore erat amet
-                            </p>
+                            <h5 className="text-body fst-italic mb-4">
+                                Tiêu chí của chúng tôi là mang đến cho người dùng một website cung cấp
+                                các tiện ích nhanh như: nhắn tin, lưu trữ tài liệu văn bản và lưu trữ hình ảnh nhanh chống và tiện lợi
+                            </h5>
+                            
                             <div className="row g-3">
                                 <div
                                     className="col-sm-6 wow zoomIn"
@@ -40,11 +33,11 @@ class Home extends React.Component {
                                 >
                                     <h5 className="mb-3">
                                         <i className="fa fa-check-circle text-primary me-3" />
-                                        Award Winning
+                                        Tiện lợi
                                     </h5>
                                     <h5 className="mb-3">
                                         <i className="fa fa-check-circle text-primary me-3" />
-                                        Professional Staff
+                                        Nhanh chóng
                                     </h5>
                                 </div>
                                 <div
@@ -53,11 +46,11 @@ class Home extends React.Component {
                                 >
                                     <h5 className="mb-3">
                                         <i className="fa fa-check-circle text-primary me-3" />
-                                        24/7 Opened
+                                        Dễ dàng
                                     </h5>
                                     <h5 className="mb-3">
                                         <i className="fa fa-check-circle text-primary me-3" />
-                                        Fair Prices
+                                        Thân thiện
                                     </h5>
                                 </div>
                             </div>
@@ -79,7 +72,7 @@ class Home extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+        );  
     }
 }
 
