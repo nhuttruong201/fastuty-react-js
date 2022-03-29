@@ -12,7 +12,7 @@ import Chat from "./components/ChatPages/Chat";
 import SharePage from "./components/NotePages/SharePage";
 import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
 import SearchImage from "./components/FastImage/SearchImage";
-import Image from "./components/FastImage/Image";
+import Image from "./components/ImagePage/Image";
 
 class App extends Component {
     render() {

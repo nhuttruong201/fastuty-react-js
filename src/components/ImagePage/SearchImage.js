@@ -39,11 +39,11 @@ class SearchImage extends React.Component {
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-sm-10 col-12 ">
                         <div className="mx-auto mt-4 px-4 py-5 bg-white rounded border">
-                            <h5 className="text-primary text-uppercase">
-                                Fast Image
+                            <h5 className="position-relative d-inline-block text-primary text-uppercase">
+                                FastImage
                             </h5>
                             <form>
-                                <div className="form-group mt 4">
+                                <div className="form-group mt-4">
                                     {errMsg && (
                                         <p className="text-danger">{errMsg}</p>
                                     )}
@@ -80,15 +80,8 @@ class SearchImage extends React.Component {
                                 className="text-center p-4 text-black-50"
                                 style={{ fontSize: "14px" }}
                             >
-                                <span>
-                                    Những người cùng mã phòng sẽ chat được với
-                                    nhau.
-                                </span>
+                                <span>Bộ sưu tập của bạn sẽ được lưu trữ</span>
                                 <br></br>
-                                <span>
-                                    Tất cả tin nhắn sẽ biến mất sau khi cuộc trò
-                                    chuyện kết thúc.
-                                </span>
                             </p>
                         </div>
                     </div>

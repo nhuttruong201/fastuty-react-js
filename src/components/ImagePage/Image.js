@@ -7,6 +7,7 @@ class Image extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
+            images: [],
         };
     }
     fetchData = async (imageCode) => {
@@ -17,7 +18,11 @@ class Image extends React.Component {
 
         //     })
         // }
-        console.log(res);
+
+        let { images } = res.data;
+        this.setState({ images: images, isLoading: false });
+
+        console.log(images);
     };
 
     async componentDidMount() {
@@ -31,7 +36,7 @@ class Image extends React.Component {
     }
 
     render() {
-        let { isLoading } = this.state;
+        let { isLoading, images } = this.state;
         return (
             <>
                 {isLoading && (
@@ -41,7 +46,10 @@ class Image extends React.Component {
                         </h5>
                     </div>
                 )}
-                {!isLoading && <> </>}
+                {!isLoading &&
+                    images.map((item, index) => (
+                        <img key={index} src={item.url} alt={item.title} />
+                    ))}
             </>
         );
     }
