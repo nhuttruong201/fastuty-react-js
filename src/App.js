@@ -11,7 +11,7 @@ import BackupPage from "./components/NotePages/BackupPage";
 import Chat from "./components/ChatPages/Chat";
 import SharePage from "./components/NotePages/SharePage";
 import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
-import SearchImage from "./components/FastImage/SearchImage";
+import SearchImage from "./components/ImagePage/SearchImage";
 import Image from "./components/ImagePage/Image";
 
 class App extends Component {
