@@ -55,7 +55,7 @@ class Image extends React.Component {
                                     <div className="row mt-3">
                                         <div className="sec-title text-center mb50 wow bounceInDown animated">
                                             <h2 className="text-uppercase text-success">
-                                                Features
+                                                Picture
                                             </h2>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ class Image extends React.Component {
                                     </div>
                                 </div>
                             </section>
-                            <from>
+                            <form>
                                 <div className="form-group mt-2 text-center">
                                     <button className="btn btn-primary m-1">
                                         <i className="bi bi-upload mx-1"></i>
@@ -90,8 +90,38 @@ class Image extends React.Component {
                                         Shared
                                     </button>
                                 </div>
-                            </from>
+                            </form>
                             <div className="project-wrapper">
+                                {images.map((item, index) => (
+                                    <figure className="mix work-item branding">
+                                        <img
+                                            key={index}
+                                            src={item.url}
+                                            alt={item.title}
+                                        />
+                                        <figcaption className="overlay">
+                                            <>
+                                                {images.map((item, index) => (
+                                                    <div>
+                                                        <a
+                                                            className="fancybox"
+                                                            rel="works"
+                                                            key={index}
+                                                            href={item.url}
+                                                            title={item.title}
+                                                        >
+                                                            <i className="fa fa-eye fa-lg"></i>
+                                                        </a>
+                                                        <br></br>
+                                                        <span>
+                                                            {item.title}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </>
+                                        </figcaption>
+                                    </figure>
+                                ))}
                                 <figure className="mix work-item branding">
                                     <img
                                         src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
@@ -110,64 +140,6 @@ class Image extends React.Component {
                                         <p>Photography</p>
                                     </figcaption>
                                 </figure>
-
-                                <figure className="mix work-item web">
-                                    <img
-                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        alt=""
-                                    />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
-
-                                <figure className="mix work-item logo-design">
-                                    <img
-                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        alt=""
-                                    />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
-
-                                <figure className="mix work-item photography">
-                                    <img
-                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        alt=""
-                                    />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
-
                                 <figure className="mix work-item branding">
                                     <img
                                         src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
@@ -186,47 +158,17 @@ class Image extends React.Component {
                                         <p>Photography</p>
                                     </figcaption>
                                 </figure>
-
-                                <figure className="mix work-item web">
-                                    <img src="img/works/item-6.jpg" alt="" />
+                                <figure className="mix work-item branding">
+                                    <img
+                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
+                                        alt=""
+                                    />
                                     <figcaption className="overlay">
                                         <a
                                             className="fancybox"
                                             rel="works"
                                             title="Write Your Image Caption Here"
-                                            href="img/works/item-6.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
-
-                                <figure className="mix work-item logo-design">
-                                    <img src="img/works/item-7.jpg" alt="" />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="img/works/item-7.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
-
-                                <figure className="mix work-item photography">
-                                    <img src="img/works/item-8.jpg" alt="" />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="img/works/item-8.jpg"
+                                            href="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
                                         >
                                             <i className="fa fa-eye fa-lg"></i>
                                         </a>

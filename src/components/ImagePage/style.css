@@ -21,8 +21,8 @@ p {
 
 .work-item > img {
     display: block;
-    height: auto;
-    max-width: 100%;
+    height: 270px;
+    width: 100%;
 }
 
 .overlay {
