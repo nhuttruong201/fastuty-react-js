@@ -99,7 +99,8 @@ h6,
 }
 
 .btn {
-    font-family: "Jost", sans-serif;
+    /* font-family: "Jost", sans-serif; */
+    font-family: "Open Sans", sans-serif !important;
     font-weight: 600;
     transition: 0.5s;
 }
@@ -433,10 +434,6 @@ td {
     padding: 15px 10px;
 }
 
-.btn {
-    font-family: "Open Sans" !important;
-}
-
 .text-size-14 {
     font-size: 14px !important;
 }
@@ -445,6 +442,10 @@ td {
     height: calc(100% - 100px);
 }
 
+.note-share-container {
+    height: calc(100% - 70px);
+}
+/* 
 .btn {
     border-radius: 4px;
     margin: 1px 3px;
@@ -455,7 +456,7 @@ td {
 .btn_hover:hover {
     color: #fff !important;
     background-color: #007bff !important;
-}
+} */
 
 button:focus {
     box-shadow: none !important;
@@ -463,4 +464,22 @@ button:focus {
 
 .modal-title {
     font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.shadow {
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+        0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+}
+
+.radius {
+    border-radius: 6px;
+}
+h4,
+h5,
+h6 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.disname-video-call {
+    color: rgba(0, 0, 0, 0.7);
 }

@@ -820,3 +820,10 @@ h4 {
 .elm-avatar img:hover {
     opacity: 0.7;
 }
+
+video {
+    background-color: #ddd;
+    border-radius: 7px;
+    width: 100%;
+    height: 300px;
+}

@@ -78,10 +78,11 @@ class SharePage extends React.Component {
 
         return (
             <>
-                <div className="container mt-3 py-3 px-4 bg-white h-75">
+                <div className="container note-share-container py-3 px-4 bg-white">
                     {isShared ? (
                         <p className="text-primary">
-                            <i className="bi bi-share"></i> {code} được chia sẻ.
+                            <i className="bi bi-share"></i>
+                            <i class="bi bi-dot"></i> {code} được chia sẻ.
                         </p>
                     ) : (
                         <p className="text-danger">
@@ -90,7 +91,7 @@ class SharePage extends React.Component {
                         </p>
                     )}
                     {isShowBody && (
-                        <div style={{ height: "90%" }}>
+                        <div style={{ height: "95%" }}>
                             <ReactQuill
                                 theme="bubble"
                                 placeholder="chưa có nội dung..."

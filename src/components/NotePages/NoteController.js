@@ -85,8 +85,7 @@ class NoteController extends React.Component {
     };
 
     handleSubmitCode = () => {
-        let inputCode = this.state.inputCode;
-        this.props.submitCode(inputCode);
+        this.props.submitCode(this.state.inputCode);
     };
 
     componentDidMount() {

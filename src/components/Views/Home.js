@@ -22,10 +22,12 @@ class Home extends React.Component {
                                 </h1>
                             </div>
                             <h5 className="text-body fst-italic mb-4">
-                                Tiêu chí của chúng tôi là mang đến cho người dùng một website cung cấp
-                                các tiện ích nhanh như: nhắn tin, lưu trữ tài liệu văn bản và lưu trữ hình ảnh nhanh chống và tiện lợi
+                                Tiêu chí của chúng tôi là mang đến cho người
+                                dùng một website cung cấp các tiện ích nhanh
+                                như: nhắn tin, lưu trữ tài liệu văn bản và lưu
+                                trữ hình ảnh nhanh chống và tiện lợi
                             </h5>
-                            
+
                             <div className="row g-3">
                                 <div
                                     className="col-sm-6 wow zoomIn"
@@ -72,7 +74,7 @@ class Home extends React.Component {
                     </div>
                 </div>
             </div>
-        );  
+        );
     }
 }
 

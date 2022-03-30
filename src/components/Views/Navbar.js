@@ -9,7 +9,6 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-2">
             <Link to={"/"} className="navbar-brand p-0">
                 <h2 className="m-0 text-primary">
-                    <i className="fas fa-meteor"></i>
                     &nbsp;Fast<span className="text-secondary">Uty</span>
                 </h2>
             </Link>

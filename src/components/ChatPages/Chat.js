@@ -159,6 +159,11 @@ const Chat = (props) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    const handleGoVideoCall = () => {
+        // alert("handleGoVideoCall");
+        history.push("/chat/video-call/" + roomId);
+    };
+
     useEffect(() => {
         document.title = `Fast Chat - ${roomId}`;
         handleChatRealtime(roomId);
@@ -189,6 +194,7 @@ const Chat = (props) => {
                         avatar={avatar}
                         roomId={roomId}
                         leaveRoom={() => handleLeaveRoom()}
+                        goVideoCall={handleGoVideoCall}
                     />
                 </div>
                 <div className="wrapper bg-white h-100">

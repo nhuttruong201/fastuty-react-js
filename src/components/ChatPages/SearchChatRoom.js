@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import randomId from "../../services/randomId";
 
@@ -37,7 +37,7 @@ const SearchChatRoom = (props) => {
             <div className="row justify-content-center">
                 <div className="col-md-5 col-sm-10 col-12">
                     <div className="mx-auto mt-4 px-4 py-5 bg-white rounded border">
-                        <h5 className="position-relative d-inline-block text-primary text-uppercase">
+                        <h5 className="text-primary text-uppercase">
                             fastchat
                         </h5>
                         <form>
@@ -83,6 +83,15 @@ const SearchChatRoom = (props) => {
                                 chuyện kết thúc.
                             </span>
                         </p>
+                        <p className="text-center text-black-50">hoặc</p>
+                        <div className="text-center">
+                            <Link to={"/video-call"}>
+                                <button className="btn btn-primary px-5">
+                                    <i className="bi bi-camera-video"></i> Gọi
+                                    video
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -112,31 +112,36 @@ class Note extends React.Component {
     };
 
     fetchData = async (code) => {
-        let res = await axios.get(`/api/note/${code}`);
-        // console.log(">>> res from fetchData: ", res);
-        if (res.data.isPrivate) {
-            // console.log("note is private!!!");
+        try {
+            let res = await axios.get(`/api/note/${code}`);
+            // console.log(">>> res from fetchData: ", res);
+            if (res.data.isPrivate) {
+                this.setState({
+                    isLoading: false,
+                    isConfirmedPassword: false,
+                });
+                return;
+            }
+            
+            let note = res.data.data;
+
             this.setState({
                 isLoading: false,
-                isConfirmedPassword: false,
+                code: note.code,
+                password: note.password,
+                isShared: note.isShared,
+                content: note.content,
+                updatedAt: moment(note.updatedAt).format(
+                    "DD/MM/YYYY hh:mm:ss A"
+                ),
+                isConfirmedPassword: true,
             });
-            return;
+
+            // * real time
+            this.handleRealTime(code);
+        } catch (err) {
+            console.log("Err from fetchData FastNote: ", err);
         }
-
-        let note = res.data.data;
-
-        this.setState({
-            isLoading: false,
-            code: note.code,
-            password: note.password,
-            isShared: note.isShared,
-            content: note.content,
-            updatedAt: moment(note.updatedAt).format("DD/MM/YYYY hh:mm:ss A"),
-            isConfirmedPassword: true,
-        });
-
-        // * real time
-        this.handleRealTime(code);
     };
 
     handleRealTime = (code) => {
@@ -215,9 +220,9 @@ class Note extends React.Component {
             <>
                 {isLoading ? (
                     <div className="center">
-                        <p className="text-center text-primary">
+                        <h5 className="text-center text-primary">
                             Đang tải dữ liệu...
-                        </p>
+                        </h5>
                     </div>
                 ) : (
                     <div

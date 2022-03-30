@@ -99,7 +99,7 @@ const ShowInfo = (props) => {
                         </div>
                         <div className="text-center">
                             <button
-                                className="btn btn-primary mt-3"
+                                className="btn btn-primary mt-3 px-5 radius"
                                 onClick={() => handleUpdateUserInfo()}
                             >
                                 Cập nhật thông tin

@@ -41,7 +41,7 @@ class Image extends React.Component {
                         </h5>
                     </div>
                 )}
-                {!isLoading && <> </>}
+                {!isLoading && <></>}
             </>
         );
     }
