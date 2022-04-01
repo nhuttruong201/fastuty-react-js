@@ -2,7 +2,7 @@ import React from "react";
 import axios from "../../configs/axios";
 import { withRouter } from "react-router-dom";
 import Background from "./images/banner.jpg";
-import "./style.css";
+import "./Image.css";
 class Image extends React.Component {
     constructor(props) {
         super(props);
@@ -38,6 +38,8 @@ class Image extends React.Component {
 
     render() {
         let { isLoading, images } = this.state;
+        let { imageCode } = this.props.match.params;
+
         return (
             <>
                 {isLoading && (
@@ -55,7 +57,7 @@ class Image extends React.Component {
                                     <div className="row mt-3">
                                         <div className="sec-title text-center mb50 wow bounceInDown animated">
                                             <h2 className="text-uppercase text-success">
-                                                Picture
+                                                {imageCode}
                                             </h2>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -91,55 +93,34 @@ class Image extends React.Component {
                                     </button>
                                 </div>
                             </form>
-                            <div className="project-wrapper">
+                            <div className="project-wrapper mt-5">
                                 {images.map((item, index) => (
-                                    <figure className="mix work-item branding">
-                                        <img
-                                            key={index}
-                                            src={item.url}
-                                            alt={item.title}
-                                        />
-                                        <figcaption className="overlay">
-                                            <>
-                                                {images.map((item, index) => (
-                                                    <div>
-                                                        <a
-                                                            className="fancybox"
-                                                            rel="works"
-                                                            key={index}
-                                                            href={item.url}
-                                                            title={item.title}
-                                                        >
-                                                            <i className="fa fa-eye fa-lg"></i>
-                                                        </a>
-                                                        <br></br>
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
-                                                    </div>
-                                                ))}
-                                            </>
-                                        </figcaption>
-                                    </figure>
+                                    <>
+                                        <figure className="mix work-item ">
+                                            <img src={item.url} alt="" />
+                                            <figcaption className="overlay">
+                                                <a
+                                                    className="fancybox"
+                                                    rel="works"
+                                                    key={index}
+                                                    title={item.title}
+                                                    href={item.url}
+                                                >
+                                                    <i className="fas fa-eye" />
+                                                </a>
+                                                <a className="btn-edit pointer">
+                                                    <i className="fas fa-pen" />
+                                                </a>
+                                                <a className="btn-delete pointer">
+                                                    <i className="fas fa-trash" />
+                                                </a>
+                                                <h4>{item.title}</h4>
+                                                {/* <p>{item.url}</p> */}
+                                            </figcaption>
+                                        </figure>
+                                    </>
                                 ))}
-                                <figure className="mix work-item branding">
-                                    <img
-                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        alt=""
-                                    />
-                                    <figcaption className="overlay">
-                                        <a
-                                            className="fancybox"
-                                            rel="works"
-                                            title="Write Your Image Caption Here"
-                                            href="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
-                                        >
-                                            <i className="fa fa-eye fa-lg"></i>
-                                        </a>
-                                        <h4>Labore et dolore magnam</h4>
-                                        <p>Photography</p>
-                                    </figcaption>
-                                </figure>
+
                                 <figure className="mix work-item branding">
                                     <img
                                         src="https://cellphones.com.vn/sforum/wp-content/uploads/2021/11/2-20.jpg"
