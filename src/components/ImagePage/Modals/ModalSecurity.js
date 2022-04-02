@@ -1,8 +1,7 @@
 import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-
-import { withRouter } from "react-router-dom";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 import ShowNoti from "../../Notis/ShowNoti";
 
 class ModalSecurity extends React.Component {
@@ -15,29 +14,22 @@ class ModalSecurity extends React.Component {
 
     handleChangeStatePass = (e) => {
         let isChecked = e.target.checked;
-        console.log("handleChangeStatePass: ", isChecked);
+
         this.setState({
             isOnPassword: isChecked,
             password: isChecked ? this.state.password : "",
         });
     };
 
-    handleKeyDown = (e) => {
-        // console.log("handleKeyDown", e);
-        if (e.key === "Enter") {
-            this.handleUpdatePassword();
-        }
-    };
-
-    handleOnChangePassword = (e) => {
-        // console.log("handleOnChangePassword", e);
+    onChangePassword = (e) => {
+        console.log(this.state.password);
         this.setState({
             password: e.target.value,
         });
     };
 
     handleUpdatePassword = () => {
-        let code = this.props.match.params.code;
+        let { imageCode: code } = this.props.match.params;
         let { password, isOnPassword } = this.state;
 
         if (
@@ -46,24 +38,21 @@ class ModalSecurity extends React.Component {
             (password.length > 20 && isOnPassword)
         ) {
             this.setState({
-                errMsg: "Mật khẩu không hợp lệ!",
+                errMsg: "Mật khẩu không hợp lệ",
                 okMsg: null,
             });
             return;
         }
-
-        // gọi api update password
         axios
             .put(
-                `${process.env.REACT_APP_API_ENDPOINT}/api/note/update-password`,
+                `${process.env.REACT_APP_API_ENDPOINT}/api/collection/update-password`,
                 {
                     code,
                     password,
                 }
             )
             .then((res) => {
-                // console.log("res from handleUpdatePassword: ", res);
-                // noti
+                console.log("res from update pass: ", res);
                 if (res.status === 200) {
                     this.setState({
                         okMsg:
@@ -72,7 +61,6 @@ class ModalSecurity extends React.Component {
                                 : "Cập nhật thành công!",
                         errMsg: null,
                     });
-
                     this.props.updatePassword(password);
                     return;
                 }
@@ -82,28 +70,25 @@ class ModalSecurity extends React.Component {
                 });
             })
             .catch((err) => {
-                console.log(err);
+                console.log("err from update pass:", err);
                 this.setState({
                     okMsg: null,
                     errMsg: "Đã xảy ra lỗi!",
                 });
             });
     };
-
     componentDidMount() {
         let { password: propPassword } = this.props;
-        // console.log("Props pass: ", propPassword);
+        console.log("Props pass: ", propPassword);
 
         this.setState({
             isOnPassword: propPassword === "" ? false : true,
             password: propPassword,
         });
     }
-
     render() {
-        let { isOnPassword, password, errMsg, okMsg } = this.state;
         let { isShow, isClose } = this.props;
-
+        let { isOnPassword, password, errMsg, okMsg } = this.state;
         return (
             <div>
                 <Modal isOpen={isShow} centered={true}>
@@ -140,20 +125,15 @@ class ModalSecurity extends React.Component {
                         {!isOnPassword ? null : (
                             <div className="form-group mt-4">
                                 <input
-                                    type={"text"}
+                                    type={"password"}
                                     value={password}
                                     placeholder={"mật khẩu từ 4 - 20 ký tự"}
                                     maxLength={20}
                                     className="form-control"
-                                    onKeyDown={(e) => this.handleKeyDown(e)}
-                                    autoFocus
-                                    onChange={(e) =>
-                                        this.handleOnChangePassword(e)
-                                    }
+                                    onChange={(e) => this.onChangePassword(e)}
                                 />
                             </div>
                         )}
-
                         {errMsg && <ShowNoti isError={true} message={errMsg} />}
                         {okMsg && <ShowNoti isError={false} message={okMsg} />}
                     </ModalBody>
@@ -177,5 +157,4 @@ class ModalSecurity extends React.Component {
         );
     }
 }
-
 export default withRouter(ModalSecurity);
