@@ -45,13 +45,16 @@ class ModalCheckPassCollection extends React.Component {
                 password,
             }
         );
+
+        console.log("handleConfirmPassword from modal check: ", res);
+
         if (!res.data.result) {
             this.setState({
                 errMsg: "Mật khẩu không đúng",
             });
             return;
         }
-        this.props.configPassword(res.data.data);
+        this.props.configPassword(res.data);
     };
 
     handleCancel = () => {

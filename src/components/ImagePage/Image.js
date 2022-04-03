@@ -74,7 +74,6 @@ class Image extends React.Component {
             isLoading: false,
             isConfirmedPassword: true,
         });
-
         console.log("data from fetchData: ", images);
     };
 
@@ -95,10 +94,13 @@ class Image extends React.Component {
     // };
 
     handleConfirmPassword = (data) => {
+        console.log("handleConfirmPassword from Image: ", data);
+
         this.setState({
             isLoading: false,
-            code: data.code,
-            password: data.password,
+            images: data.data,
+            code: data.collection.code,
+            password: data.collection.password,
             isConfirmedPassword: true,
         });
     };
@@ -197,6 +199,7 @@ class Image extends React.Component {
                                                     rel="works"
                                                     title={item.title}
                                                     href={item.url}
+                                                    data-fancybox
                                                 >
                                                     <i className="fas fa-eye" />
                                                 </a>
