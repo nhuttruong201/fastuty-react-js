@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import ModalUpLoad from "./Modals/ModalUpLoad";
 import ModalSecurity from "./Modals/ModalSecurity";
 import ModalShared from "./Modals/ModalShared";
+import ModalCheckPassCollection from "./Modals/ModalCheckPassCollection";
 import "./Image.css";
 class Image extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class Image extends React.Component {
             showModalUpLoad: false,
             showModalSecurity: false,
             showModalShared: false,
-            isConfirmedPassword: false,
+            isConfirmedPassword: true,
         };
     }
 
@@ -59,15 +60,20 @@ class Image extends React.Component {
 
     fetchData = async (imageCode) => {
         let res = await axios.get(`/api/collection/${imageCode}`);
-        // if(res.data.isPrivate)
-        // {
-        //     this.setState({
-
-        //     })
-        // }
+        if (res.data.isPrivate) {
+            this.setState({
+                isLoading: false,
+                isConfirmedPassword: false,
+            });
+            return;
+        }
 
         let images = res.data.data;
-        this.setState({ images: images, isLoading: false });
+        this.setState({
+            images: images,
+            isLoading: false,
+            isConfirmedPassword: true,
+        });
 
         console.log("data from fetchData: ", images);
     };
@@ -87,6 +93,15 @@ class Image extends React.Component {
     //     let { images } = res.data;
     //     this.setState({ images: images, title: title });
     // };
+
+    handleConfirmPassword = (data) => {
+        this.setState({
+            isLoading: false,
+            code: data.code,
+            password: data.password,
+            isConfirmedPassword: true,
+        });
+    };
 
     render() {
         let {
@@ -110,7 +125,11 @@ class Image extends React.Component {
                     </div>
                 )}
 
-                {!isLoading && !isConfirmedPassword && <h1>Show modal</h1>}
+                {!isLoading && !isConfirmedPassword && (
+                    <ModalCheckPassCollection
+                        configPassword={this.handleConfirmPassword}
+                    />
+                )}
 
                 {!isLoading && isConfirmedPassword && (
                     <>
