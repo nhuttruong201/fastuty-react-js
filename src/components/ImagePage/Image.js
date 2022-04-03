@@ -15,7 +15,7 @@ class Image extends React.Component {
             showModalUpLoad: false,
             showModalSecurity: false,
             showModalShared: false,
-            isConfirmedPassword: false,
+            isConfirmedPassword: true,
         };
     }
 
@@ -66,7 +66,7 @@ class Image extends React.Component {
         //     })
         // }
 
-        let images = res.data.data;
+        let images = res.data.images;
         this.setState({ images: images, isLoading: false });
 
         console.log("data from fetchData: ", images);
@@ -167,29 +167,55 @@ class Image extends React.Component {
                             <div className="project-wrapper mt-5">
                                 {images &&
                                     images.map((item, index) => (
-                                        <figure
-                                            key={index}
-                                            className="mix work-item"
-                                        >
-                                            <img src={item.url} alt="" />
-                                            <figcaption className="overlay">
-                                                <a
-                                                    className="fancybox"
-                                                    rel="works"
-                                                    title={item.title}
-                                                    href={item.url}
-                                                >
-                                                    <i className="fas fa-eye" />
-                                                </a>
-                                                <a className="btn-edit pointer">
-                                                    <i className="fas fa-pen" />
-                                                </a>
-                                                <a className="btn-delete pointer">
-                                                    <i className="fas fa-trash" />
-                                                </a>
-                                                <h4>{item.title}</h4>
-                                            </figcaption>
-                                        </figure>
+                                        <>
+                                            <figure
+                                                key={index}
+                                                className="mix work-item"
+                                            >
+                                                <img src={item.url} alt="" />
+                                                <figcaption className="overlay">
+                                                    <a
+                                                        rel="works"
+                                                        title={item.title}
+                                                        href={item.url}
+                                                        data-fancybox
+                                                    >
+                                                        <i className="fas fa-eye" />
+                                                    </a>
+                                                    <a className="btn-edit pointer">
+                                                        <i className="fas fa-pen" />
+                                                    </a>
+                                                    <a className="btn-delete pointer">
+                                                        <i className="fas fa-trash" />
+                                                    </a>
+                                                    <h4>{item.title}</h4>
+                                                </figcaption>
+                                            </figure>
+
+                                            <figure
+                                                key={index}
+                                                className="mix work-item branding"
+                                            >
+                                                <img src={item.url} alt="" />
+                                                <figcaption className="overlay">
+                                                    <a
+                                                        rel="works"
+                                                        title={item.title}
+                                                        href={item.url}
+                                                        data-fancybox
+                                                    >
+                                                        <i className="fas fa-eye" />
+                                                    </a>
+                                                    <a className="btn-edit pointer">
+                                                        <i className="fas fa-pen" />
+                                                    </a>
+                                                    <a className="btn-delete pointer">
+                                                        <i className="fas fa-trash" />
+                                                    </a>
+                                                    <h4>{item.title}</h4>
+                                                </figcaption>
+                                            </figure>
+                                        </>
                                     ))}
                             </div>
                             {showModalUpLoad && (
