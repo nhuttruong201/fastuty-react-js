@@ -6,6 +6,8 @@ import ModalSecurity from "./Modals/ModalSecurity";
 import ModalShared from "./Modals/ModalShared";
 import ModalCheckPassCollection from "./Modals/ModalCheckPassCollection";
 import "./Image.css";
+import ModalUpdateTitle from "./Modals/ModalUpdateTitle";
+import ModalDeleteImage from "./Modals/ModalDeleteImage";
 class Image extends React.Component {
     constructor(props) {
         super(props);
@@ -16,10 +18,31 @@ class Image extends React.Component {
             showModalUpLoad: false,
             showModalSecurity: false,
             showModalShared: false,
+            showUpdateTitles: false,
+            showDeleteImage: false,
             isConfirmedPassword: true,
+            urlImage: "",
+            titleUpdate: "",
+            _idImage: "",
         };
     }
 
+    handleShowModalUpdateTitle = (title, url, _id) => {
+        this.setState({
+            titleUpdate: title,
+            urlImage: url,
+            _idImage: _id,
+            showUpdateTitles: true,
+        });
+    };
+
+    handleDeleteImage = (url, _id) => {
+        this.setState({
+            urlImage: url,
+            _idImage: _id,
+            showDeleteImage: true,
+        });
+    };
     openModal = (modalName) => {
         if (modalName === "upload") {
             this.setState({
@@ -38,6 +61,12 @@ class Image extends React.Component {
                 showModalShared: true,
             });
         }
+
+        if (modalName === "delete") {
+            this.setState({
+                showDeleteImage: true,
+            });
+        }
     };
 
     closeModal = (modalName) => {
@@ -49,6 +78,16 @@ class Image extends React.Component {
         }
         if (modalName === "share") {
             this.setState({ showModalShared: false });
+        }
+        if (modalName === "updateTitle") {
+            this.setState({
+                showUpdateTitles: false,
+            });
+        }
+        if (modalName === "delete") {
+            this.setState({
+                showDeleteImage: false,
+            });
         }
     };
 
@@ -105,6 +144,20 @@ class Image extends React.Component {
         });
     };
 
+    uploadImage = async () => {
+        let { imageCode } = this.props.match.params;
+        await this.fetchData(imageCode);
+    };
+
+    handleUpdateTitleSucceed = async () => {
+        let { imageCode } = this.props.match.params;
+        await this.fetchData(imageCode);
+    };
+    updateImage = async () => {
+        // alert("updateImage");
+        let { imageCode } = this.props.match.params;
+        await this.fetchData(imageCode);
+    };
     render() {
         let {
             isLoading,
@@ -112,8 +165,13 @@ class Image extends React.Component {
             showModalUpLoad,
             showModalSecurity,
             showModalShared,
+            showUpdateTitles,
+            showDeleteImage,
             password,
             isConfirmedPassword,
+            titleUpdate,
+            urlImage,
+            _idImage,
         } = this.state;
         let { imageCode } = this.props.match.params;
 
@@ -132,7 +190,6 @@ class Image extends React.Component {
                         configPassword={this.handleConfirmPassword}
                     />
                 )}
-
                 {!isLoading && isConfirmedPassword && (
                     <>
                         <div>
@@ -194,7 +251,7 @@ class Image extends React.Component {
                                         >
                                             <img src={item.url} alt="" />
                                             <figcaption className="overlay">
-                                                <a
+                                                <span
                                                     className="fancybox"
                                                     rel="works"
                                                     title={item.title}
@@ -202,13 +259,30 @@ class Image extends React.Component {
                                                     data-fancybox
                                                 >
                                                     <i className="fas fa-eye" />
-                                                </a>
-                                                <a className="btn-edit pointer">
+                                                </span>
+                                                <span
+                                                    className="btn-edit"
+                                                    onClick={() =>
+                                                        this.handleShowModalUpdateTitle(
+                                                            item.title,
+                                                            item.url,
+                                                            item._id
+                                                        )
+                                                    }
+                                                >
                                                     <i className="fas fa-pen" />
-                                                </a>
-                                                <a className="btn-delete pointer">
-                                                    <i className="fas fa-trash" />
-                                                </a>
+                                                </span>
+                                                <span className="btn-delete pointer">
+                                                    <i
+                                                        className="fas fa-trash"
+                                                        onClick={() =>
+                                                            this.handleDeleteImage(
+                                                                item.url,
+                                                                item._id
+                                                            )
+                                                        }
+                                                    />
+                                                </span>
                                                 <h4>{item.title}</h4>
                                             </figcaption>
                                         </figure>
@@ -218,6 +292,7 @@ class Image extends React.Component {
                                 <ModalUpLoad
                                     isShow={showModalUpLoad}
                                     isClose={this.closeModal}
+                                    uploadImage={this.uploadImage}
                                 />
                             )}
 
@@ -233,6 +308,24 @@ class Image extends React.Component {
                                 <ModalShared
                                     isShow={showModalShared}
                                     isClose={this.closeModal}
+                                />
+                            )}
+                            {showUpdateTitles && (
+                                <ModalUpdateTitle
+                                    data={{ titleUpdate, urlImage, _idImage }}
+                                    isShow={showUpdateTitles}
+                                    isClose={this.closeModal}
+                                    updateSucceed={
+                                        this.handleUpdateTitleSucceed
+                                    }
+                                />
+                            )}
+                            {showDeleteImage && (
+                                <ModalDeleteImage
+                                    data={{ urlImage, _idImage }}
+                                    isShow={showDeleteImage}
+                                    isClose={this.closeModal}
+                                    updateImage={this.updateImage}
                                 />
                             )}
                         </div>
