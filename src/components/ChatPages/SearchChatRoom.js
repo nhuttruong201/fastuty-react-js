@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import randomId from "../../services/randomId";
 
-const SearchChatRoom = (props) => {
+const SearchChatRoom = () => {
     const [errMsg, setErrMsg] = useState(null);
     const [roomId, setRoomId] = useState("");
     const history = useHistory();
@@ -71,7 +71,7 @@ const SearchChatRoom = (props) => {
                             </div>
                         </form>
                         <p
-                            className="text-center p-4 text-black-50"
+                            className="text-center p-3 text-black-50"
                             style={{ fontSize: "14px" }}
                         >
                             <span>
@@ -83,7 +83,7 @@ const SearchChatRoom = (props) => {
                                 chuyện kết thúc.
                             </span>
                         </p>
-                        <p className="text-center text-black-50">hoặc</p>
+                        <p className="text-center text-black-50 p-3">hoặc</p>
                         <div className="text-center">
                             <Link to={"/video-call"}>
                                 <button className="btn btn-primary px-5">

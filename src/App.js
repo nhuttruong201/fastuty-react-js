@@ -20,7 +20,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <Navbar clickToNote={this.handlePageNote} />
+                <Navbar />
                 <Switch>
                     <Route path="/" exact>
                         <Home />

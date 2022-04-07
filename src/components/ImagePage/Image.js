@@ -6,6 +6,7 @@ import "./style.css";
 class Image extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             isLoading: true,
             images: [],

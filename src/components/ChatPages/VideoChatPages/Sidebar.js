@@ -13,6 +13,7 @@ const Sidebar = ({ children }) => {
         callUser,
         setCallWaiting,
     } = useContext(SocketContext);
+    
     const [idToCall, setIdToCall] = useState("");
     const [isCopy, setIsCopy] = useState(false);
     const [errMsg, setErrMsg] = useState(null);
