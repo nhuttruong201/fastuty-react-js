@@ -28,6 +28,7 @@ class ModalShare extends React.Component {
             .then((res) => {
                 console.log(res);
                 this.setState({
+                    isShared: isChecked,
                     errMsg: null,
                     okMsg:
                         "Đã " +
@@ -67,7 +68,7 @@ class ModalShare extends React.Component {
         let { isShared, okMsg, errMsg } = this.state;
         let { isClose } = this.props;
 
-        console.log("Check isShared: ", isShared);
+        console.log("Check isShared from modal share note: ", isShared);
 
         return (
             <div>
