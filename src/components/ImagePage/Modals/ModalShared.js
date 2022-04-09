@@ -68,7 +68,7 @@ class ModalShared extends React.Component {
         return (
             <Modal isOpen={true} centered={true} autoFocus={false}>
                 <ModalHeader>
-                    <i className="fas fa-share"></i> Chia sẻ ghi chú
+                    <i className="fas fa-share"></i> Chia sẻ bộ sưu tập
                 </ModalHeader>
                 <ModalBody className="p-4">
                     <div className="text-black-80" style={{ fontSize: "15px" }}>
