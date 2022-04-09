@@ -72,6 +72,7 @@ class SharePage extends React.Component {
 
         this.handleRealTime(code);
     }
+
     render() {
         let code = this.props.match.params.code;
         let { isShared, content, isShowBody } = this.state;

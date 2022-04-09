@@ -15,6 +15,7 @@ import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
 import SearchImage from "./components/ImagePage/SearchImage";
 import Image from "./components/ImagePage/Image";
 import VideoCallArea from "./components/ChatPages/VideoChatPages/VideoCallArea";
+import ShareImagePage from "./components/ImagePage/ShareImagePage";
 
 class App extends Component {
     render() {
@@ -51,6 +52,9 @@ class App extends Component {
                     </Route>
                     <Route path="/image/:imageCode" exact>
                         <Image />
+                    </Route>
+                    <Route path="/image/share/:imageCode" exact>
+                        <ShareImagePage />
                     </Route>
                 </Switch>
             </Router>

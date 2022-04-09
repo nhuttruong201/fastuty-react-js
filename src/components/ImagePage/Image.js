@@ -15,7 +15,9 @@ class Image extends React.Component {
         this.state = {
             isLoading: true,
             images: [],
+            code: "",
             password: "",
+            isShared: false,
             showModalUpLoad: false,
             showModalSecurity: false,
             showModalShared: false,
@@ -113,8 +115,9 @@ class Image extends React.Component {
             images: images,
             isLoading: false,
             isConfirmedPassword: true,
+            isShared: res.data.collection.isShared,
         });
-        console.log("data from fetchData: ", images);
+        console.log("res data from fetchData images: ", res);
     };
 
     async componentDidMount() {
@@ -159,22 +162,36 @@ class Image extends React.Component {
         let { imageCode } = this.props.match.params;
         await this.fetchData(imageCode);
     };
+    handleUpdateShareState = (isShared) => {
+        console.log("Check share state:", isShared);
+        this.setState({
+            isShared,
+        });
+    };
     render() {
         let {
             isLoading,
             images,
-            showModalUpLoad,
-            showModalSecurity,
-            showModalShared,
-            showUpdateTitles,
-            showDeleteImage,
             password,
+            code,
+            isShared,
             isConfirmedPassword,
             titleUpdate,
             urlImage,
             _idImage,
         } = this.state;
+
+        let {
+            showModalUpLoad,
+            showModalSecurity,
+            showModalShared,
+            showUpdateTitles,
+            showDeleteImage,
+        } = this.state;
+
         let { imageCode } = this.props.match.params;
+
+        console.log("check from isShared from image: ", isShared);
 
         return (
             <>
@@ -309,6 +326,12 @@ class Image extends React.Component {
                                 <ModalShared
                                     isShow={showModalShared}
                                     isClose={this.closeModal}
+                                    updateShareState={
+                                        this.handleUpdateShareState
+                                    }
+                                    isShared={isShared}
+                                    password={password}
+                                    code={imageCode}
                                 />
                             )}
                             {showUpdateTitles && (

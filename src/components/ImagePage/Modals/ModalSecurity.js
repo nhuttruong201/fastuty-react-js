@@ -93,7 +93,7 @@ class ModalSecurity extends React.Component {
             <div>
                 <Modal isOpen={isShow} centered={true}>
                     <ModalHeader>
-                        <i className="fas fa-lock"></i> Bảo mật ghi chú
+                        <i className="fas fa-lock"></i> Bảo mật bộ sưu tập
                     </ModalHeader>
                     <ModalBody className="p-4">
                         <div
@@ -102,8 +102,8 @@ class ModalSecurity extends React.Component {
                         >
                             <p className="text-justify text-center">
                                 Khi đặt mật khẩu, bạn cần xác thực trước khi đi
-                                đến ghi chú. Thay đổi sẽ có hiệu lực từ lần truy
-                                cập tiếp theo.
+                                đến bộ sưu tập. Thay đổi sẽ có hiệu lực từ lần
+                                truy cập tiếp theo.
                             </p>
                         </div>
                         <div className="mid">
