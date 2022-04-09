@@ -122,7 +122,7 @@ class Note extends React.Component {
                 });
                 return;
             }
-            
+
             let note = res.data.data;
 
             this.setState({
