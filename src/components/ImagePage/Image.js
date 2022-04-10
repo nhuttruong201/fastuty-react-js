@@ -279,7 +279,7 @@ class Image extends React.Component {
                                                     <i className="fas fa-eye" />
                                                 </span>
                                                 <span
-                                                    className="btn-edit"
+                                                    className="btn-edit m-1"
                                                     onClick={() =>
                                                         this.handleShowModalUpdateTitle(
                                                             item.title,

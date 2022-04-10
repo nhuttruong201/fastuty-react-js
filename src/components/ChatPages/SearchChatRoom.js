@@ -83,15 +83,6 @@ const SearchChatRoom = () => {
                                 chuyện kết thúc.
                             </span>
                         </p>
-                        <p className="text-center text-black-50 p-3">hoặc</p>
-                        <div className="text-center">
-                            <Link to={"/video-call"}>
-                                <button className="btn btn-primary px-5">
-                                    <i className="bi bi-camera-video"></i> Gọi
-                                    video
-                                </button>
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,6 @@ import SearchChatRoom from "./components/ChatPages/SearchChatRoom";
 
 import SearchImage from "./components/ImagePage/SearchImage";
 import Image from "./components/ImagePage/Image";
-import VideoCallArea from "./components/ChatPages/VideoChatPages/VideoCallArea";
 import ShareImagePage from "./components/ImagePage/ShareImagePage";
 
 class App extends Component {
@@ -43,9 +42,6 @@ class App extends Component {
                     </Route>
                     <Route path="/chat/:roomId" exact>
                         <Chat />
-                    </Route>
-                    <Route path="/video-call" exact>
-                        <VideoCallArea />
                     </Route>
                     <Route path="/image" exact>
                         <SearchImage />
