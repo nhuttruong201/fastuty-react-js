@@ -55,7 +55,7 @@ class SharePage extends React.Component {
         document.title = `Note Share - ${code}`;
 
         await axios
-            .get(API_ENDPOINT + "/api/note/" + code)
+            .get(API_ENDPOINT + "/api/note/share/" + code)
             .then((res) => {
                 console.log(res);
                 if (res.data.status === 200 && res.data.data.isShared) {
@@ -83,7 +83,7 @@ class SharePage extends React.Component {
                     {isShared ? (
                         <p className="text-primary">
                             <i className="bi bi-share"></i>
-                            <i class="bi bi-dot"></i> {code} được chia sẻ.
+                            <i className="bi bi-dot"></i> {code} được chia sẻ.
                         </p>
                     ) : (
                         <p className="text-danger">

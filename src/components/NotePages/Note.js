@@ -91,11 +91,14 @@ class Note extends React.Component {
     };
 
     handleConfirmedPassword = (data) => {
+        console.log("handleConfirmedPassword: ", data);
+
         this.setState({
             isLoading: false,
             content: data.content,
             code: data.code,
             password: data.password,
+            isShared: data.isShared,
             updatedAt: moment(new Date(data.updatedAt)).format(
                 "DD/MM/YYYY hh:mm:ss A"
             ),
@@ -214,7 +217,6 @@ class Note extends React.Component {
         } = this.state;
 
         // console.log("Check isShared from note: ", isShared);
-        // console.log("check props redux: ", this.props.dataRedux);
 
         return (
             <>
