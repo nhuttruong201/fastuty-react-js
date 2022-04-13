@@ -1,20 +1,18 @@
 import React from "react";
-import {
-    Alert,
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-} from "reactstrap";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import ShowNoti from "../../Notis/ShowNoti";
 import { withRouter } from "react-router-dom";
 import "./uploadImage.css";
 import axios from "axios";
 class ModalUpload extends React.Component {
-    state = {};
-
+    state = {
+        errMsg: "",
+        okMsg: "",
+    };
     handleUploadImage = async (e) => {
+        this.setState({
+            okMsg: "Đang tải ảnh lên...",
+        });
         // alert("ok");
         let files = e.target.files;
         var formData = new FormData();
@@ -45,9 +43,8 @@ class ModalUpload extends React.Component {
                         url: link,
                     }
                 );
-                this.props.uploadImage();
+                this.props.uploadSuccess(res);
                 return;
-                console.log("handleUploadImage: ", res);
             })
             .catch((err) => {
                 console.log("Check err Upload Image", err);

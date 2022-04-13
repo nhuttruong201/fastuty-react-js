@@ -148,9 +148,12 @@ class Image extends React.Component {
         });
     };
 
-    uploadImage = async () => {
+    handleUploadSuccess = async () => {
         let { imageCode } = this.props.match.params;
         await this.fetchData(imageCode);
+        this.setState({
+            showModalUpLoad: false,
+        });
     };
 
     handleUpdateTitleSucceed = async () => {
@@ -310,7 +313,7 @@ class Image extends React.Component {
                                 <ModalUpLoad
                                     isShow={showModalUpLoad}
                                     isClose={this.closeModal}
-                                    uploadImage={this.uploadImage}
+                                    uploadSuccess={this.handleUploadSuccess}
                                 />
                             )}
 
