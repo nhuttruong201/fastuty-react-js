@@ -58,14 +58,12 @@ class ModalUpload extends React.Component {
             <div>
                 <Modal isOpen={true}>
                     <ModalHeader>
-                        <span className="text-black h5">Tải ảnh lên</span>
+                        <span className="text-black">Tải ảnh lên</span>
                     </ModalHeader>
-                    <ModalBody className="p-4 ">
+
+                    <ModalBody className="p-3">
                         {errMsg && <ShowNoti isError={true} message={errMsg} />}
                         {okMsg && <ShowNoti isError={false} message={okMsg} />}
-                    </ModalBody>
-
-                    <ModalBody className="">
                         <div className="modal-body">
                             <div className="form-group">
                                 <form
