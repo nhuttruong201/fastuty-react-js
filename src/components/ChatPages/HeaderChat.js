@@ -20,11 +20,6 @@ const HeaderChat = (props) => {
         setShowConfirmLeaveRoom(false);
     };
 
-    const handleCallVideo = () => {
-        // console.log("handleCallVideo");
-        props.goVideoCall();
-    };
-
     useEffect(() => {
         return () => {
             setShowConfirmLeaveRoom(false);
@@ -58,12 +53,7 @@ const HeaderChat = (props) => {
                         />
                     </svg>
                 </div>
-                {/* <div
-                    className="button-video-call"
-                    onClick={() => handleCallVideo()}
-                >
-                    <i className="bi bi-camera-video"></i>
-                </div> */}
+
                 <div className="user-settings">
                     <div className="settings">
                         <svg

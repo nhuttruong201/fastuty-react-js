@@ -53,7 +53,7 @@ const Chat = (props) => {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "multipart/form-data",
-                    Authorization: "Client-ID 58f2ebf29687a0b",
+                    Authorization: "Client-ID 0ed69fa9aec43c9",
                 },
                 responseType: "json",
             })
@@ -159,11 +159,6 @@ const Chat = (props) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    const handleGoVideoCall = () => {
-        // alert("handleGoVideoCall");
-        history.push("/chat/video-call/" + roomId);
-    };
-
     useEffect(() => {
         document.title = `Fast Chat - ${roomId}`;
         handleChatRealtime(roomId);
@@ -194,7 +189,6 @@ const Chat = (props) => {
                         avatar={avatar}
                         roomId={roomId}
                         leaveRoom={() => handleLeaveRoom()}
-                        goVideoCall={handleGoVideoCall}
                     />
                 </div>
                 <div className="wrapper bg-white h-100">

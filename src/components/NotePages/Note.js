@@ -193,9 +193,6 @@ class Note extends React.Component {
         let code = this.props.match.params.code;
         document.title = `Fast Note - ${code}`;
         await this.fetchData(code);
-        // this.state.focus
-        //     ? this.bodyInput.current.focus()
-        //     : this.bodyInput.current.blur();
     }
 
     componentWillUnmount() {
